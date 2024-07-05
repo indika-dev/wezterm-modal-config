@@ -96,9 +96,16 @@ wez.on("update-status", function(window, pane)
   local colors = { bg:darken(0.15), bg, bg:lighten(0.15), bg:lighten(0.25) }
 
   local battery = wez.battery_info()[1]
-  battery.charge = battery.state_of_charge * 100
-  battery.lvl_round = fun.toint(fun.mround(battery.charge, 10))
-  battery.ico = icons.Battery[battery.state][tostring(battery.lvl_round)]
+  if battery.state == "Unknown" then
+    -- does not work with ThinkPad T470s
+    battery.ico = icons.Battery.Full["100"]
+    battery.lvl = 100
+    battery.charge = 100
+  else
+    battery.charge = battery.state_of_charge * 100
+    battery.lvl_round = fun.toint(fun.mround(battery.charge, 10))
+    battery.ico = icons.Battery[battery.state][tostring(battery.lvl_round)]
+  end
   battery.lvl = tonumber(math.floor(battery.charge + 0.5))
   battery.full = ("%s %i%%"):format(battery.ico, battery.lvl)
 
