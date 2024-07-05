@@ -4,7 +4,7 @@ local Config = {}
 Config.front_end = "WebGpu"
 Config.webgpu_force_fallback_adapter = false
 if os.getenv "USER" == "stefan" then
-  Config.webgpu_power_preference = "HighPerformace"
+  Config.webgpu_power_preference = "HighPerformance"
 else
   Config.webgpu_power_preference = "LowPower"
 end
