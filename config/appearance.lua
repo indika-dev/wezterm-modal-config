@@ -64,7 +64,7 @@ Config.integrated_title_buttons = { "Hide", "Maximize", "Close" }
 
 ---exit behavior
 Config.clean_exit_codes = { 130 }
-Config.exit_behavior = "CloseOnCleanExit"
+Config.exit_behavior = "Close"
 Config.exit_behavior_messaging = "Verbose"
 Config.skip_close_confirmation_for_processes_named = {
   "bash",
