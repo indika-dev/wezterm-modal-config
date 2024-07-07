@@ -1,5 +1,5 @@
 ---@class Wezterm
-local wez = require "wezterm"
+local wt = require "wezterm"
 
 ---@class Config
 local Config = {}
@@ -43,7 +43,7 @@ local firacode_features = {
   -- "onum", ---styles: 1234567890
 }
 
-Config.font = wez.font_with_fallback {
+Config.font = wt.font_with_fallback {
   {
     family = "FiraCode Nerd Font",
     weight = "Regular",
@@ -79,7 +79,7 @@ Config.font_rules = {
   {
     intensity = "Normal",
     italic = true,
-    font = wez.font_with_fallback {
+    font = wt.font_with_fallback {
       {
         -- this one is for italic glyphs
         -- family = "Monaspace Radon Var",
@@ -95,7 +95,7 @@ Config.font_rules = {
   {
     intensity = "Bold",
     -- italic = true,
-    font = wez.font_with_fallback {
+    font = wt.font_with_fallback {
       {
         -- this one is for bold glyphs
         -- family = "Monaspace Krypton Var",
