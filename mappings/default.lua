@@ -5,7 +5,7 @@ local fun = require "utils.fun"
 local Config = {}
 
 Config.disable_default_key_bindings = true
-Config.leader = { key = "Space", mods = "CTRL|ALT", timeout_milliseconds = 1000 }
+Config.leader = { key = "Space", mods = "CTRL", timeout_milliseconds = 1000 }
 
 local mappings = {
   { "<C-Tab>", act.ActivateTabRelative(1), "next tab" },
