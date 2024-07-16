@@ -1,7 +1,21 @@
 ---@class Config
 local Config = {}
 
-local scheme = require("utils.fun").get_scheme()
+local colorscheme = function()
+  local _time = os.date "*t"
+  if _time.hour >= 6 and _time.hour < 20 then
+    if "stefan" == require("utils.fun").currentUser() then
+      return "kanagawa-lotus"
+    else
+      return "kanagawa-wave"
+    end
+  else
+    return "kanagawa-dragon"
+  end
+end
+
+local default_scheme = require("utils.fun").get_scheme()
+local scheme = colorscheme()
 local theme = require("colors")[scheme]
 Config.color_schemes = require "colors"
 Config.color_scheme = scheme
