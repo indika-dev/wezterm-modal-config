@@ -416,4 +416,8 @@ M.printObj = function(obj, hierarchyLevel)
   end
 end
 
+M.currentUser = function()
+  return os.getenv "USER" or os.getenv "LOGNAME" or os.getenv "USERNAME"
+end
+
 return M
