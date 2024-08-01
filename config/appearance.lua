@@ -1,10 +1,13 @@
----@class Config
+local Utils = require "utils"
+local color = Utils.fn.color
+local fs = Utils.fn.fs
+
 local Config = {}
 
-local scheme = require("utils.fun").get_scheme()
-local theme = require("colors")[scheme]
-Config.color_schemes = require "colors"
-Config.color_scheme = scheme
+Config.color_schemes = color.get_schemes()
+Config.color_scheme = color.get_scheme()
+
+local theme = Config.color_schemes[Config.color_scheme]
 
 Config.background = {
   {
@@ -57,7 +60,9 @@ Config.visual_bell = {
 
 ---window appearance
 Config.window_padding = { left = 2, right = 2, top = 2, bottom = 1 }
---Config.window_decorations = "RESIZE"
+if fs.platform().is_win then
+  Config.window_decorations = "RESIZE"
+end
 Config.integrated_title_button_alignment = "Right"
 Config.integrated_title_button_style = "Windows"
 Config.integrated_title_buttons = { "Hide", "Maximize", "Close" }
@@ -80,13 +85,6 @@ Config.skip_close_confirmation_for_processes_named = {
 Config.window_close_confirmation = "AlwaysPrompt"
 
 ---new tab button
-Config.tab_bar_style = {}
-for _, tab_button in ipairs { "new_tab", "new_tab_hover" } do
-  Config.tab_bar_style[tab_button] = require("wezterm").format {
-    { Text = require("utils.icons").Separators.TabBar.right },
-    { Text = " + " },
-    { Text = require("utils.icons").Separators.TabBar.left },
-  }
-end
+color.set_tab_button(Config, theme)
 
 return Config

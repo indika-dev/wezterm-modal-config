@@ -1,7 +1,8 @@
----@class Wezterm
-local wt = require "wezterm"
+---@diagnostic disable: undefined-field
 
----@class Config
+local wt = require "wezterm"
+local fs = require("utils.fn").fs
+
 local Config = {}
 
 Config.adjust_window_size_when_changing_font_size = false
@@ -54,13 +55,13 @@ Config.font = wt.font_with_fallback {
 }
 
 if os.getenv "USER" == "stefan" then
-  if require("utils.fun").platform().is_win then
+  if fs.platform().is_win then
     Config.font_size = 16
   else
     Config.font_size = 16
   end
 else
-  if require("utils.fun").platform().is_win then
+  if fs.platform().is_win then
     Config.font_size = 14
   else
     Config.font_size = 14

@@ -1,7 +1,6 @@
 local act = require("wezterm").action
-local fun = require "utils.fun"
+local key = require("utils.fn").key
 
----@class Config
 local Config = {}
 
 Config.disable_default_key_bindings = true
@@ -58,18 +57,17 @@ local mappings = {
   },
   { "<leader>c", act.ActivateCopyMode, "copy mode" },
   { "<leader>s", act.Search "CurrentSelectionOrEmptyString", "search mode" },
+  { "<leader>p", act.ActivateKeyTable { name = "pick_mode" }, "pick mode" },
 }
 
 for i = 1, 24 do
-  table.insert(
-    mappings,
+  mappings[#mappings + 1] =
     { "<S-F" .. i .. ">", act.ActivateTab(i - 1), "activate tab " .. i }
-  )
 end
 
 Config.keys = {}
 for _, map_tbl in ipairs(mappings) do
-  fun.map(map_tbl[1], map_tbl[2], Config.keys)
+  key.map(map_tbl[1], map_tbl[2], Config.keys)
 end
 
 return Config

@@ -1,9 +1,8 @@
-local wez = require "wezterm" ---@class Wezterm
-local act = wez.action
+local wt = require "wezterm"
+local act = wt.action
 
-local fun = require "utils.fun" ---@class Fun
+local key = require("utils.fn").key
 
----@class Config
 local Config = {}
 
 local key_tables = {
@@ -14,9 +13,7 @@ local key_tables = {
       "y",
       act.Multiple {
         { CopyTo = "ClipboardAndPrimarySelection" },
-        {
-          CopyMode = "Close",
-        },
+        { CopyMode = "Close" },
       },
       "copy selection",
     },
@@ -98,12 +95,6 @@ local key_tables = {
     { "-", act.AdjustPaneSize { "Down", 2 }, "resize bot" },
   }, -- }}}
 
-  -- {{{1 LOCK MODE (lock_mode)
-  lock_mode = {
-    { "<C-g>", "PopKeyTable", "" },
-  },
-  -- }}}
-
   -- {{{1 HELP MODE (help_mode)
   help_mode = {
     { "<ESC>", "PopKeyTable", "exit" },
@@ -158,13 +149,20 @@ local key_tables = {
     { "<leader>s", act.Search "CurrentSelectionOrEmptyString", "search mode" },
   },
   -- }}}
+
+  -- {{{1 PICK MODE (pick_mode)
+  pick_mode = {
+    { "<ESC>", "PopKeyTable", "exit" },
+    { "t", require("picker.theme"):pick(), "theme picker" },
+    { "s", require("picker.font_size"):pick(), "fontsize picker" },
+  }, -- }}}
 }
 
 Config.key_tables = {}
 for mode, mode_table in pairs(key_tables) do
   Config.key_tables[mode] = {}
   for _, map_tbl in ipairs(mode_table) do
-    fun.map(map_tbl[1], map_tbl[2], Config.key_tables[mode])
+    key.map(map_tbl[1], map_tbl[2], Config.key_tables[mode])
   end
 end
 
