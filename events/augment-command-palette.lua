@@ -1,12 +1,10 @@
----@diagnostic disable: undefined-field
+---@module "events.augment-command-palette"
+---@author sravioli
+---@license GNU-GPLv3
 
+---@diagnostic disable: undefined-field
 local wt = require "wezterm"
 local act = wt.action
-
-local Util = require "utils"
-local fs = Util.fn.fs
-local color = Util.fn.color
-local dump = Util.fn.dump
 
 wt.on("augment-command-palette", function(_, _)
   return {
@@ -24,27 +22,24 @@ wt.on("augment-command-palette", function(_, _)
       },
     },
     {
-      brief = "Build themes",
-      icon = "cod_paintcan",
-      action = wt.action_callback(function()
-        local colorschemes = wt.color.get_builtin_schemes()
-        local fname = function(name)
-          return fs.pathconcat(wt.config_dir, "_themes", name:gsub("%.", "-") .. ".lua")
-        end
-
-        for name, colors in pairs(colorschemes) do
-          colors = color.add_tab_bar(colors)
-          local filename = fname(name)
-
-          local file = io.open(filename, "w")
-          if not file then
-            return
-          end
-
-          file:write("return " .. dump(colors))
-          file:close()
-        end
-      end),
+      brief = "Colorscheme picker",
+      icon = "md_palette",
+      action = require("picker.colorscheme"):pick(),
+    },
+    {
+      brief = "Font picker",
+      icon = "md_format_font",
+      action = require("picker.font"):pick(),
+    },
+    {
+      brief = "Font size picker",
+      icon = "md_format_font_size_decrease",
+      action = require("picker.font-size"):pick(),
+    },
+    {
+      brief = "Font leading picker",
+      icon = "fa_text_height",
+      action = require("picker.font-leading"):pick(),
     },
   }
 end)

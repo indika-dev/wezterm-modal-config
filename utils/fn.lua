@@ -8,8 +8,11 @@
 
 ---@diagnostic disable-next-line: assign-type-mismatch
 local wt = require "wezterm"
+local G = wt.GLOBAL
 
-local wcwidth, codes = require "utils.wcwidth", require("utf8").codes
+local Icon = require("utils").class.icon
+
+local wcwidth, codes = require "utils.external.wcwidth", require("utf8").codes
 local floor, ceil = math.floor, math.ceil
 
 ---User defined utility functions
@@ -46,41 +49,19 @@ M.tbl_merge = function(t1, ...)
   return t1
 end
 
---~ {{{1
-
-M.dump = function(o)
-  if type(o) == "table" then
-    local s = "{"
-    local entries = {}
-    for k, v in pairs(o) do
-      local key
-      if type(k) == "string" then
-        key = string.format("%q", k)
-      else
-        key = tostring(k)
-      end
-
-      local value
-      if type(v) == "table" then
-        value = M.dump(v)
-      elseif type(v) == "string" then
-        value = string.format("%q", v)
-      else
-        value = tostring(v)
-      end
-      entries[#entries + 1] = "[" .. key .. "]=" .. value
-    end
-    s = s .. table.concat(entries, ",") .. "}"
-    return s
-  else
-    if type(o) == "string" then
-      return string.format("%q", o)
-    else
-      return tostring(o)
-    end
+---Memoize the function return value in the given `wezterm.GLOBAL` key
+---@param key string key in which to memoize fn return value
+---@param value any function to memoize
+---@return any value function that returns the cached value
+M.gmemoize = function(key, value)
+  local is_fn = type(value) == "function"
+  if G[key] == nil then
+    G[key] = is_fn and value() or value
   end
+  return is_fn and function()
+    return G[key]
+  end or value
 end
---~ }}}
 
 -- {{{1 Utils.Fn.FileSystem
 
@@ -88,7 +69,7 @@ end
 ---@field private target_triple string
 M.fs = {}
 
-M.fs.target_triple = wt.target_triple
+M.fs.target_triple = M.gmemoize("target_triple", wt.target_triple)
 
 -- {{{2 META
 
@@ -106,13 +87,15 @@ M.fs.target_triple = wt.target_triple
 ---Linux, or macOS.
 ---
 ---@return Utils.Fn.FileSystem.Platform platform
-M.fs.platform = function()
+M.fs.platform = M.gmemoize("plaftorm", function()
   local is_win = M.fs.target_triple:find "windows" ~= nil
   local is_linux = M.fs.target_triple:find "linux" ~= nil
   local is_mac = M.fs.target_triple:find "apple" ~= nil
   local os = is_win and "windows" or is_linux and "linux" or is_mac and "mac" or "unknown"
   return { os = os, is_win = is_win, is_linux = is_linux, is_mac = is_mac }
-end
+end)
+
+local is_win = M.fs.platform().is_win
 
 ---Gets the user home directory.
 ---
@@ -120,18 +103,14 @@ end
 ---sources and replaces backslashes with forward slashes.
 ---
 ---@return string home The path to the user home directory.
-M.fs.home = function()
-  local home = (os.getenv "USERPROFILE" or os.getenv "HOME" or wt.home or ""):gsub(
-    "\\",
-    "/"
-  )
-  return home
-end
+M.fs.home = M.gmemoize("home", function()
+  return ((os.getenv "USERPROFILE" or os.getenv "HOME" or wt.home or ""):gsub("\\", "/"))
+end)
 
 ---Path separator based on the platform.
 ---
 ---This variable holds the appropriate path separator character for the current platform.
-M.fs.path_separator = M.fs.platform().is_win and "\\" or "/"
+M.fs.path_separator = M.gmemoize("path_separator", is_win and "\\" or "/")
 
 ---Equivalent to POSIX `basename(3)`.
 ---
@@ -210,7 +189,7 @@ M.fs.get_cwd_hostname = function(pane, search_git_root_instead)
     hostname = hostname:gsub("^%l", string.upper)
   end
 
-  if M.fs.platform().is_win then
+  if is_win then
     cwd = cwd:gsub("/" .. M.fs.home() .. "(.-)$", "~%1")
   else
     cwd = cwd:gsub(M.fs.home() .. "(.-)$", "~%1")
@@ -247,11 +226,64 @@ M.fs.pathshortener = function(path, len)
   return short_path
 end
 
+---Concatenates a vararg list of values to a single string
+---@vararg string
+---@return string path The concatenated path
 M.fs.pathconcat = function(...)
   local paths = { ... }
   return table.concat(paths, M.fs.path_separator)
 end
 
+---Reads the contents of a directory and returns a list of absolute filenames.
+---@param directory string absolute path to the directory to read.
+---@return table|nil files list of files present in the directory. nil if not accessible.
+---
+---@usage
+---~~~lua
+---local directory = "/path/to/your/directory"
+---local files = M.fs.read_dir(directory)
+---for _, file in ipairs(files) do
+---  print(file)
+---end
+---~~~
+M.fs.read_dir = function(directory)
+  if G.dirs_read and G.dirs_read[directory] then
+    return G.dirs_read[directory]
+  end
+
+  local filename = M.fs.basename(directory) .. ".txt"
+  local cmd = "find %s -maxdepth 1 -type f > %s"
+  local tempfile = M.fs.pathconcat("/tmp", filename)
+  if is_win then
+    cmd = 'cmd /C "dir %s /B /S > %s"'
+    tempfile = M.fs.pathconcat(os.getenv "TEMP", filename)
+  end
+  cmd = cmd:format(directory, tempfile)
+
+  local files = {}
+  local file = io.open(tempfile, "r")
+  if file then
+    for line in file:lines() do
+      files[#files + 1] = line
+    end
+    file:close()
+  else
+    local success = os.execute(cmd)
+    if not success then
+      return wt.log_error "Unable to create temp file."
+    end
+    file = io.open(tempfile, "r")
+    if file then
+      for line in file:lines() do
+        files[#files + 1] = line
+      end
+      file:close()
+    end
+  end
+
+  G.dirs_read = { [directory] = files }
+  return G.dirs_read[directory]
+end
 -- }}}
 
 -- {{{1 Utils.Fn.Maths
@@ -445,6 +477,49 @@ M.str.split = function(s, sep, opts)
   return t
 end
 
+M.str.format_tab_title = function(tab, config, max_width)
+  local pane = tab.active_pane
+
+  local title = (tab.tab_title and #tab.tab_title > 0) and tab.tab_title
+    or tab.active_pane.title
+
+  title = title:gsub("^Copy mode: ", "")
+  local process, other = title:match "^(%S+)%s*%-?%s*%s*(.*)$"
+
+  if Icon.Progs[process] then
+    title = Icon.Progs[process] .. " " .. (other or "")
+  end
+
+  local proc = pane.foreground_process_name
+  if proc:find "nvim" then
+    proc = proc:sub(proc:find "nvim")
+  end
+  local is_truncation_needed = true
+  if proc == "nvim" then
+    ---full title truncation is not necessary since the dir name will be truncated
+    is_truncation_needed = false
+    local cwd = M.fs.basename(pane.current_working_dir.file_path)
+
+    ---instead of truncating the whole title, truncate to length the cwd to ensure that the
+    ---right parenthesis always closes.
+    if max_width == config.tab_max_width then
+      cwd = wt.truncate_right(cwd, max_width - 14) .. "..."
+    end
+
+    title = ("%s ( %s)"):format(Icon.Progs[proc], cwd)
+  end
+
+  title = title:gsub(M.fs.basename(M.fs.home()), "󰋜 ")
+
+  ---truncate the tab title when it overflows the maximum available space, then concatenate
+  ---some dots to indicate the occurred truncation
+  if is_truncation_needed and max_width == config.tab_max_width then
+    title = wt.truncate_right(title, max_width - 8) .. "..."
+  end
+
+  return title
+end
+
 -- }}}
 
 -- {{{1 Utils.Fn.Keymap
@@ -547,42 +622,24 @@ end
 ---@class Utils.Fn.Color
 M.color = {}
 
-M.color.add_tab_bar = function(colors)
-  colors.tab_bar = {
-    background = colors.cursor_fg or colors.background,
-    active_tab = { bg_color = colors.ansi[5], fg_color = colors.background },
-    inactive_tab = { bg_color = colors.brights[1], fg_color = colors.background },
-    inactive_tab_hover = {
-      bg_color = colors.selection_bg,
-      fg_color = colors.brights[1],
-      italic = true,
-    },
-    new_tab = { bg_color = colors.brights[1], fg_color = colors.background },
-    new_tab_hover = {
-      bg_color = colors.split,
-      fg_color = colors.background,
-      italic = true,
-    },
-  }
-
-  return colors
-end
-
-local colorschemes = nil
-
----Merge color schemes from multiple sources
----@return table colorschemes Full colorschemes table
+---Retrieves all the customs colorschemes
+---@return table schemes Full colorschemes table
 M.color.get_schemes = function()
-  if colorschemes then
-    return colorschemes
+  local schemes = {}
+
+  local dir = M.fs.pathconcat(wt.config_dir, "picker", "assets", "colorschemes")
+  local files = M.fs.read_dir(dir)
+  if not files then
+    return wt.log_error(
+      ("Unable to read from directory: '%s'"):format(M.fs.basename(dir))
+    )
   end
 
-  colorschemes = wt.color.get_builtin_schemes()
-  for name, colors in pairs(require "colors") do
-    colorschemes[name] = colors
+  for i = 1, #files do
+    local name = M.fs.basename(files[i]:gsub("%.lua$", ""))
+    schemes[name] = require("picker.assets.colorschemes." .. name).scheme
   end
-
-  return colorschemes
+  return schemes
 end
 
 ---Returns the colorscheme name absed on the system appearance
@@ -636,8 +693,20 @@ M.color.set_tab_button = function(config, theme)
     ButtonLayout:push(sep_bg, style.fg_color, " + ", attributes)
     ButtonLayout:push(sep_bg, sep_fg, sep.left, attributes)
 
-    config.tab_bar_style[state] = wt.format(ButtonLayout)
+    config.tab_bar_style[state] = ButtonLayout:format()
   end
+end
+
+M.color.set_scheme = function(Config, theme, name)
+  Config.color_scheme = name
+  Config.char_select_bg_color = theme.brights[6]
+  Config.char_select_fg_color = theme.background
+  Config.command_palette_bg_color = theme.brights[6]
+  Config.command_palette_fg_color = theme.background
+  Config.background = {
+    { source = { Color = theme.background }, width = "100%", height = "100%" },
+  }
+  M.color.set_tab_button(Config, theme)
 end
 
 -- }}}
