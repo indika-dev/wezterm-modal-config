@@ -17,7 +17,6 @@ local colorscheme = function()
   end
 end
 
-local default_scheme = require("utils.fun").get_scheme()
 local scheme = colorscheme()
 local theme = require("colors")[scheme]
 Config.color_schemes = require "colors"
