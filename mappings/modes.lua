@@ -1,6 +1,9 @@
-local wt = require "wezterm"
-local act = wt.action
+---@module "mappings.modes"
+---@author sravioli
+---@license GNU-GPLv3
 
+---@diagnostic disable-next-line: undefined-field
+local act = require("wezterm").action
 local key = require("utils.fn").key
 
 local Config = {}
@@ -153,8 +156,10 @@ local key_tables = {
   -- {{{1 PICK MODE (pick_mode)
   pick_mode = {
     { "<ESC>", "PopKeyTable", "exit" },
-    { "t", require("picker.theme"):pick(), "theme picker" },
-    { "s", require("picker.font_size"):pick(), "fontsize picker" },
+    { "c", require("picker.colorscheme"):pick(), "colorscheme" },
+    { "f", require("picker.font"):pick(), "font" },
+    { "s", require("picker.font-size"):pick(), "font size" },
+    { "l", require("picker.font-leading"):pick(), "line height" },
   }, -- }}}
 }
 

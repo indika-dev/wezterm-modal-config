@@ -26,8 +26,8 @@ If applicable, add screenshots to help explain your problem.
 
 **Desktop (please complete the following information):**
 
-- OS: [e.g. iOS]
-- Version [e.g. 22]
+- OS: [e.g. Linux/Windows/etc.]
+- Version [e.g. `wezterm 20240715-080945-c9116830`]
 
 **Additional context**
 Add any other context about the problem here.

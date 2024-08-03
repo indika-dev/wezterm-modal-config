@@ -11,25 +11,23 @@
 ---@class Utils.Class.Config
 local M = {}
 
----@alias Config Utils.Class.Config
-
+local log = require("utils.class.logger"):new "Config"
 local wt = require "wezterm"
-local log_info, log_warn, log_error = wt.log_info, wt.log_warn, wt.log_error
 
 ---Initializes a new Config object.
 ---Creates a new Wezterm configuration object. If `wez.config_builder` is available,
 ---it sets the configuration to strict mode.
 ---
----@return Config self A new instance of the Wezterm configuration.
+---@return Utils.Class.Config self A new instance of the Wezterm configuration.
 function M:new()
   self.config = {}
 
   if wt.config_builder then
     self.config = wt.config_builder()
     self.config:set_strict_mode(true)
-    log_info "Config: using config builder"
+    log:debug "Wezterm's config builder is available"
   else
-    log_error "Config: builder unavailable!"
+    log:warn "Wezterm's config builder is unavailable"
   end
 
   self = setmetatable(self.config, { __index = M })
@@ -42,7 +40,7 @@ end
 ---its options. If a table is provided, it merges the table directly into the configuration.
 ---
 ---@param spec string|table Module name as a string or a config table.
----@return Config self Modified Config object with the new options.
+---@return Utils.Class.Config self Modified Config object with the new options.
 ---
 ---@usage
 ----- Example usage in wezterm.lua
@@ -50,12 +48,16 @@ end
 ---return Config:new():add(require "<module.name>").options
 function M:add(spec)
   if type(spec) == "string" then
+    if not pcall(require, spec) then
+      log:error("Unable to require module %s", spec)
+      return self
+    end
     spec = require(spec)
   end
 
   for key, value in pairs(spec) do
     if self.config[key] == spec[key] then
-      log_warn("Config: found dupe: ", { old = self.config[key], new = spec[key] })
+      log:warn("found duplicate! old: %s, new: %s", self.config[key], spec[key])
     end
     self.config[key] = value
   end
