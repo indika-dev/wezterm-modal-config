@@ -3,6 +3,7 @@
 local wt = require "wezterm"
 local fs = require("utils.fn").fs
 
+---@class Config
 local Config = {}
 
 Config.adjust_window_size_when_changing_font_size = false

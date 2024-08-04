@@ -17,10 +17,9 @@ local colorscheme = function()
   end
 end
 
-local scheme = colorscheme()
-local theme = require("colors")[scheme]
-Config.color_schemes = require "colors"
-Config.color_scheme = scheme
+Config.color_schemes = color.get_schemes()
+Config.color_scheme = color.get_scheme()
+local theme = Config.color_schemes[colorscheme()]
 
 Config.background = {
   {
