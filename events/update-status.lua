@@ -127,7 +127,7 @@ wt.on("update-status", function(window, pane)
   local battery = wt.battery_info()[1]
   if battery.state == "Unknown" then
     -- does not work with ThinkPad T470s
-    battery.ico = icons.Battery.Full["100"]
+    battery.ico = Icon.Bat.Full["100"]
     battery.lvl = 100
     battery.charge = 100
   else
