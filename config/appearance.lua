@@ -1,3 +1,4 @@
+local SunTimes = require "SunTimes"
 local Utils = require "utils"
 local color = Utils.fn.color
 local fs = Utils.fn.fs
@@ -5,15 +6,20 @@ local fs = Utils.fn.fs
 local Config = {}
 
 local colorscheme = function()
-  local _time = os.date "*t"
-  if _time.hour >= 6 and _time.hour < 20 then
-    if os.getenv "USER" == "stefan" then
+  if os.getenv "USER" == "stefan" then
+    local _nowepochtime = os.time(os.date "!*t")
+    local epochTimesTable = SunTimes.GetSunTimes(51.09102, 6.5827)
+    if
+      _nowepochtime >= epochTimesTable.sunrise
+      and _nowepochtime < epochTimesTable.sunset
+    then
       return "kanagawa-lotus"
     else
-      return "kanagawa-wave"
+      local _tomorrowepochtime = epochTimesTable.sunrise + 24 * 60 * 60
+      return "kanagawa-dragon" -- "lackluster-hack"
     end
   else
-    return "kanagawa-dragon"
+    return "kanagawa-wave"
   end
 end
 
