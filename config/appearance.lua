@@ -15,8 +15,7 @@ local colorscheme = function()
     then
       return "kanagawa-lotus"
     else
-      local _tomorrowepochtime = epochTimesTable.sunrise + 24 * 60 * 60
-      return "kanagawa-dragon" -- "lackluster-hack"
+      return "kanagawa-dragon"
     end
   else
     return "kanagawa-wave"
