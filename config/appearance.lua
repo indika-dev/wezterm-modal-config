@@ -1,4 +1,4 @@
-local SunTimes = require "SunTimes"
+local SunTimes = require "config.SunTimes"
 local Utils = require "utils"
 local color = Utils.fn.color
 local fs = Utils.fn.fs
