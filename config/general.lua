@@ -3,6 +3,8 @@ local fs = require("utils.fn").fs
 
 local Config = {}
 
+Config.leader = { key = "Space", mods = "CTRL|ALT", timeout_milliseconds = 1000 }
+
 if fs.platform().is_win then
   Config.default_prog =
     { "pwsh", "-NoLogo", "-ExecutionPolicy", "RemoteSigned", "-NoProfileLoadTime" }
