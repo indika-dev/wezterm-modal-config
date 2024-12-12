@@ -93,7 +93,7 @@ local config_dir = wt.config_dir
 ---@class Utils.Class.Picker
 ---@field subdir             string  name of the picker module
 ---@field title              string  defaults to `"Pick a value"`
----@field choices            Choice[] defaults to `{}`
+---@field choices?           Choice[] defaults to `{}`
 ---@field __choices?         Choice.private[] defaults to `{}`
 ---@field fuzzy?             boolean defaults to `false`
 ---@field alphabet?          string  defaults to `"1234567890abcdefghilmnopqrstuvwxyz"`
@@ -101,8 +101,8 @@ local config_dir = wt.config_dir
 ---@field fuzzy_description? string  defaults to `"Fuzzy matching: "`
 ---@field comp?              fun(a, b): boolean function to sort choices
 ---@field build?             fun(__choices: Choice.private[], comp: function, opts: { window: wt.Window, pane: wt.Pane }): Choice[]
----@field new                fun(opts: Utils.Class.Picker): Utils.Class.Picker
----@field private log        Utils.Class.Logger
+---@field new?               fun(opts: Utils.Class.Picker): Utils.Class.Picker
+---@field private log?       Utils.Class.Logger
 
 --~ }}}
 
@@ -185,7 +185,7 @@ function M.new(opts)
   self.fuzzy_description = opts.fuzzy_description or "Fuzzy matching: "
 
   local dir = fs.pathconcat(config_dir, "picker", "assets", opts.subdir)
-  local paths = fs.read_dir(dir)
+  local paths = fs.ls_dir(dir)
   if not paths then
     self.log:error("Cannot read files from %s", dir)
     return {}

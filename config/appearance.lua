@@ -1,7 +1,9 @@
 local SunTimes = require "config.SunTimes"
 local Utils = require "utils"
 local color = Utils.fn.color
-local fs = Utils.fn.fs
+
+---@diagnostic disable-next-line: undefined-field
+local G = require("wezterm").GLOBAL
 
 local Config = {}
 
@@ -31,7 +33,7 @@ Config.background = {
     source = { Color = theme.background },
     width = "100%",
     height = "100%",
-    opacity = require("wezterm").GLOBAL.opacity or 1,
+    opacity = G.opacity or 1,
   },
 }
 
@@ -82,9 +84,6 @@ Config.visual_bell = {
 
 ---window appearance
 Config.window_padding = { left = 2, right = 2, top = 2, bottom = 1 }
-if fs.platform().is_win then
-  Config.window_decorations = "RESIZE"
-end
 Config.integrated_title_button_alignment = "Right"
 Config.integrated_title_button_style = "Windows"
 Config.integrated_title_buttons = { "Hide", "Maximize", "Close" }

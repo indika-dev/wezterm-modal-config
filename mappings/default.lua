@@ -9,7 +9,7 @@ local key = require("utils.fn").key
 local Config = {}
 
 Config.disable_default_key_bindings = true
-Config.leader = { key = "\\", mods = "ALT", timeout_milliseconds = 1000 }
+Config.leader = { key = "Space", mods = "CTRL", timeout_milliseconds = 1000 }
 
 local mappings = {
   { "<C-Tab>", act.ActivateTabRelative(1), "next tab" },
@@ -39,6 +39,14 @@ local mappings = {
   { "<C-S-Insert>", act.PasteFrom "PrimarySelection", "" },
   { "<C-Insert>", act.CopyTo "PrimarySelection", "" },
   { "<C-S-Space>", act.QuickSelect, "quick select" },
+  {
+    "<S-M-t>",
+    act.ShowLauncherArgs {
+      title = "  Search:",
+      flags = "FUZZY|LAUNCH_MENU_ITEMS|DOMAINS",
+    },
+    "new window",
+  },
 
   ---quick split and nav
   { '<C-S-">', act.SplitHorizontal { domain = "CurrentPaneDomain" }, "vsplit" },

@@ -3,6 +3,66 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [6.3.2](https://github.com/sravioli/wezterm/compare/d49c76ebb93e229adc60b2b17e5bdc53cf2b2058..6.3.2) - 2024-11-24
+#### Bug Fixes
+- rename to fs.read_dir() to fs.ls_dir() also in docs - ([d49c76e](https://github.com/sravioli/wezterm/commit/d49c76ebb93e229adc60b2b17e5bdc53cf2b2058)) - sravioli
+#### Features
+- standardize picker messages and tab names - ([227583c](https://github.com/sravioli/wezterm/commit/227583cc13f74d7b00becc70d59488fbe9aa4648)) - sravioli
+
+- - -
+
+## [6.3.1](https://github.com/sravioli/wezterm/compare/447164147e155970af2be0abbefc2afe00e7d29e..6.3.1) - 2024-11-24
+#### Bug Fixes
+- **(utils:fn)** rename fs.read_dir() to fs.ls_dir() - ([f0d9193](https://github.com/sravioli/wezterm/commit/f0d9193bcd9fc7c4d6fcdf9cc6cb7e5b83cbbcec)) - sravioli
+- correctly instanciate wezterm cache - ([4471641](https://github.com/sravioli/wezterm/commit/447164147e155970af2be0abbefc2afe00e7d29e)) - sravioli
+
+- - -
+
+## [6.3.0](https://github.com/sravioli/wezterm/compare/36ec0de9cd7b91b5de1ab3eb5cba7166ed897490..6.3.0) - 2024-11-22
+#### Bug Fixes
+- **(utils:gpu_adapter)** use correct class name - ([b20c03c](https://github.com/sravioli/wezterm/commit/b20c03c8022fbbb327a87c0b295d78e173c2bdd2)) - sravioli
+- disable wrong linter warnings - ([36ec0de](https://github.com/sravioli/wezterm/commit/36ec0de9cd7b91b5de1ab3eb5cba7166ed897490)) - sravioli
+#### Features
+- **(logger)** also check for global enable_logging - ([506ba99](https://github.com/sravioli/wezterm/commit/506ba995859009359037132937fc8eeb5ea58e98)) - sravioli
+- **(utils)** add gpu field, reorder comments - ([d50bb96](https://github.com/sravioli/wezterm/commit/d50bb961d1a0230386a7960f0b03417e2fa5a796)) - sravioli
+- **(utils:class)** reorder comments - ([14f3308](https://github.com/sravioli/wezterm/commit/14f33081ee8847a00d89e981084f32a875a25753)) - sravioli
+- improve statusbar flexibility (#19) - ([b382bb5](https://github.com/sravioli/wezterm/commit/b382bb5bd52593b7141e4900c6ddd678504967a4)) - [@sravioli](https://github.com/sravioli)
+- use builtin tbl functions, minor optimizations - ([2beb355](https://github.com/sravioli/wezterm/commit/2beb355877044036593085d5c34fbae15cb2b222)) - sravioli
+- organize utils better (#18) - ([8545605](https://github.com/sravioli/wezterm/commit/8545605c34bf17adf6c0c2bcfcf68eaa5bd3b390)) - [@sravioli](https://github.com/sravioli)
+- use new utils.fn.tbl.merge() function - ([fa1ef35](https://github.com/sravioli/wezterm/commit/fa1ef3592a363bf51224eeb49b08aaa992c9eb10)) - sravioli
+- use class instance logger - ([12ceca7](https://github.com/sravioli/wezterm/commit/12ceca7b657f2a5dc0ad57d898d2041459588392)) - sravioli
+- refactor utils.fn to add more comments, improve performance - ([6f25268](https://github.com/sravioli/wezterm/commit/6f2526854b6a66f2d974b914d23f71e0888aa118)) - sravioli
+- improve statusbar flexibility - ([d5ba634](https://github.com/sravioli/wezterm/commit/d5ba6340cc2b8d083db0929f9984dbcd9a088cd7)) - sravioli
+#### Refactoring
+- **(utils:gpu)** rename gpu_adapter to gpu - ([86ef9e5](https://github.com/sravioli/wezterm/commit/86ef9e5bcfe07321699e9cae3b7a8418b290a20b)) - sravioli
+
+- - -
+
+## [6.2.0](https://github.com/sravioli/wezterm/compare/b3d1a3fde7f874cd2ff90f70f716227cc41d7d7e..6.2.0) - 2024-11-17
+#### Bug Fixes
+- change tab title formatting signature - ([62ab5a0](https://github.com/sravioli/wezterm/commit/62ab5a05476d61f204a98c82b3e95c32235d50de)) - sravioli
+- make fields optionals to silence linter warnings - ([e284fc0](https://github.com/sravioli/wezterm/commit/e284fc0c23b8553a0ee09f1c1daa10db264448cd)) - [@sravioli](https://github.com/sravioli)
+- remove wcwidth (use wezterm.column.width) - ([b3d1a3f](https://github.com/sravioli/wezterm/commit/b3d1a3fde7f874cd2ff90f70f716227cc41d7d7e)) - sravioli
+#### Features
+- rewrite update-status, add icons, add workspace indicator - ([57d86d8](https://github.com/sravioli/wezterm/commit/57d86d8d25ae8581b871651be6bb086c07311aea)) - sravioli
+- use new append function, adapt to format_tab_title signature - ([1c54511](https://github.com/sravioli/wezterm/commit/1c54511bc6028d1ae9fc04227cda417a21bef52e)) - sravioli
+- add padl, padr, trim - ([3f64c57](https://github.com/sravioli/wezterm/commit/3f64c57ea1774317c571ead34d9582e4f1fea63a)) - sravioli
+- add prepend function - ([17d72ea](https://github.com/sravioli/wezterm/commit/17d72ea30e4278f9da6475941b00098003979899)) - sravioli
+- add new icons - ([3ac2a07](https://github.com/sravioli/wezterm/commit/3ac2a07efe472bd382de7075abc1183facba9088)) - sravioli
+- add keymap to select new tab to open - ([ba524ab](https://github.com/sravioli/wezterm/commit/ba524ab9f644fdf507bcbeba544e09e63e2fe3ff)) - [@sravioli](https://github.com/sravioli)
+- sort icons, change windows decorations for win - ([8e0c5e8](https://github.com/sravioli/wezterm/commit/8e0c5e82dbb6d11226e8a18b0bd931782207036c)) - [@sravioli](https://github.com/sravioli)
+- minor perf tweaks - ([8bb2c5a](https://github.com/sravioli/wezterm/commit/8bb2c5afbc7f4ba9d605a4d53ddf71ddf396e3e3)) - sravioli
+
+- - -
+
+## [6.1.1](https://github.com/sravioli/wezterm/compare/5457911ae31620f8584c2c821d72811c8bf42acd..6.1.1) - 2024-11-08
+#### Bug Fixes
+- restore leader key - ([3d57fbe](https://github.com/sravioli/wezterm/commit/3d57fbedd32b6a687ab8ac6555911b6f4f87dd70)) - sravioli
+#### Features
+- rewrite gmemoize to actually work, add more memoization - ([5457911](https://github.com/sravioli/wezterm/commit/5457911ae31620f8584c2c821d72811c8bf42acd)) - sravioli
+
+- - -
+
 ## [6.1.0](https://github.com/sravioli/wezterm/compare/995a31aed8ea58579e6edde900db98db894311d3..6.1.0) - 2024-11-02
 #### Bug Fixes
 - **(events:format-tab-title)** rm useless local - ([820566d](https://github.com/sravioli/wezterm/commit/820566da28a8ef9cacd29f24de5f4fc32fb4b45e)) - sravioli
