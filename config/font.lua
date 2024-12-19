@@ -45,7 +45,23 @@ local firacode_features = {
   -- "onum", ---styles: 1234567890
 }
 
+local monaspace_neon_features = {
+  -- https://monaspace.githubnext.com/
+  "calt",
+  "liga",
+  "ss01",
+  "ss02",
+  "ss03",
+  "ss07",
+  "ss09",
+}
+
 Config.font = wt.font_with_fallback {
+  {
+    family = "Monaspace Neon",
+    weight = "Regular",
+    harfbuzz_features = monaspace_neon_features,
+  },
   {
     family = "FiraCode Nerd Font",
     weight = "Regular",
@@ -72,45 +88,5 @@ end
 Config.underline_position = -2.5
 Config.underline_thickness = "2px"
 Config.warn_about_missing_glyphs = false
-
----@diagnostic disable-next-line: unused-local
-local monaspace_features =
-  { "dlig", "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss08" }
-
-Config.font_rules = {
-  {
-    intensity = "Normal",
-    italic = true,
-    font = wt.font_with_fallback {
-      {
-        -- this one is for italic glyphs
-        -- family = "Monaspace Radon Var",
-        family = "Cascadia Code NF",
-        style = "Italic",
-        weight = "Regular",
-        stretch = "Expanded",
-        -- harfbuzz_features = firacode_features,
-      },
-      { family = "Symbols Nerd Font" },
-    },
-  },
-  {
-    intensity = "Bold",
-    -- italic = true,
-    font = wt.font_with_fallback {
-      {
-        -- this one is for bold glyphs
-        -- family = "Monaspace Krypton Var",
-        family = "FiraCode Nerd Font",
-        -- style = "Italic",
-        -- style = "Normal",
-        weight = "Medium",
-        harfbuzz_features = firacode_features,
-        scale = 1.0,
-      },
-      { family = "Symbols Nerd Font" },
-    },
-  },
-}
 
 return Config
