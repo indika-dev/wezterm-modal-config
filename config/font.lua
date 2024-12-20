@@ -52,14 +52,17 @@ local monaspace_neon_features = {
   "ss01",
   "ss02",
   "ss03",
+  "ss06",
   "ss07",
   "ss09",
 }
 
 Config.font = wt.font_with_fallback {
   {
-    family = "Monaspace Neon",
-    weight = "Regular",
+    family = "Monaspace Neon Var",
+    weight = "DemiBold",
+    style = "Normal",
+    stretch = "Condensed",
     harfbuzz_features = monaspace_neon_features,
   },
   {
