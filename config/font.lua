@@ -90,4 +90,38 @@ Config.underline_position = -2.5
 Config.underline_thickness = "2px"
 Config.warn_about_missing_glyphs = false
 
+local monaspace_features =
+  { "dlig", "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss08" }
+
+Config.font_rules = {
+  {
+    intensity = "Normal",
+    italic = true,
+    font = wt.font_with_fallback {
+      {
+        family = "Monaspace Radon Var",
+        style = "Italic",
+        weight = "Regular",
+        stretch = "Normal",
+        harfbuzz_features = monaspace_features,
+      },
+      { family = "Symbols Nerd Font" },
+    },
+  },
+  {
+    intensity = "Bold",
+    italic = true,
+    font = wt.font_with_fallback {
+      {
+        family = "Monaspace Krypton Var",
+        style = "Italic",
+        weight = "ExtraBold",
+        harfbuzz_features = monaspace_features,
+        scale = 1.1,
+      },
+      { family = "Symbols Nerd Font" },
+    },
+  },
+}
+
 return Config
