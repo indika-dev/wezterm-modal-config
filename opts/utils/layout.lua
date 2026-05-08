@@ -1,6 +1,6 @@
 ---@module "opts.utils.layout"
 
----@class Opts.Utils.Layout
+---@class Opts.Utils.Ribbon
 return {
   log = {
     enabled = true,

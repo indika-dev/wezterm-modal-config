@@ -1,26 +1,31 @@
----@meta Opts.Utils.Layout
+---@meta Opts.Utils.Ribbon
 error "cannot require a meta file!"
 
 -- luacheck: push ignore 631 (line is too long)
 
----@class Opts.Utils.Layout: Opts.Utils.Base
----@field public defaults?            Opts.Utils.Layout.Defaults
----@field public attribute_aliases?   Opts.Utils.Layout.AttributeAliases
+---Configuration passed to `ribbon.wz`.
+---
+---The path remains `opts.utils.layout` for compatibility with the main config,
+---but the values configure the standalone Ribbon plugin.
+---
+---@class Opts.Utils.Ribbon: Opts.Utils.Base
+---@field public defaults?            Opts.Utils.Ribbon.Defaults
+---@field public attribute_aliases?   Opts.Utils.Ribbon.AttributeAliases
 ---@field public validate_attributes? boolean                            Whether to warn on invalid attributes.
 ---@field public strict_mode?         boolean                            Whether to throw errors instead of warnings for validation failures.
----@field public text?                Opts.Utils.Layout.Text
+---@field public text?                Opts.Utils.Ribbon.Text
 ---@field public atomic?              boolean                            Whether to reset text attributes after each operation.
 ---
 ---
----Default configuration settings
----@class Opts.Utils.Layout.Defaults
+---Default Ribbon configuration settings.
+---@class Opts.Utils.Ribbon.Defaults
 ---@field public foreground? string|nil                            Default foreground color (nil = terminal default).
 ---@field public background? string|nil                            Default background color (nil = terminal default).
----@field public attributes? Opts.Utils.Layout.Defaults.Attributes Table of text attributes with attribute names as keys and attribute values as settings.
----@field public colors?     Opts.Utils.Layout.Defaults.Colors     Table of color names (e.g., "Black", "Red")
+---@field public attributes? Opts.Utils.Ribbon.Defaults.Attributes Table of text attributes with attribute names as keys and attribute values as settings.
+---@field public colors?     Opts.Utils.Ribbon.Defaults.Colors     Table of color names (e.g., "Black", "Red")
 ---
 ---
----@class Opts.Utils.Layout.Defaults.Attributes
+---@class Opts.Utils.Ribbon.Defaults.Attributes
 ---@field public None?        "ResetAttributes",
 ---@field public NoUnderline? { Underline: "None" }
 ---@field public Single?      { Underline: "Single" }
@@ -35,8 +40,8 @@ error "cannot require a meta file!"
 ---@field public NoItalic?    { Italic: false }
 ---
 ---
----Shortcuts for attributes and combinations of attributes.
----@class Opts.Utils.Layout.AttributeAliases
+---Shortcuts for Ribbon attributes and combinations of attributes.
+---@class Opts.Utils.Ribbon.AttributeAliases
 ---@field public b?         "Bold"
 ---@field public i?         "Italic"
 ---@field public u?         "Single"
@@ -47,17 +52,17 @@ error "cannot require a meta file!"
 ---@field public subtle?    table    { "Half", "Italic" }
 ---
 ---
----@alias Opts.Utils.Layout.Text.Transformer fun(text: string): string
+---@alias Opts.Utils.Ribbon.Text.Transformer fun(text: string): string
 ---
 ---
----@class Opts.Utils.Layout.Text
+---@class Opts.Utils.Ribbon.Text
 ---@field public strip?      boolean                            Whether to strip leading/trailing whitespace from text.
 ---@field public max_length? number|nil                         Maximum text length before truncation (nil = no limit).
----@field public transform?  nil|Opts.Utils.Layout.Text.Transformer Function to transform text before processing.
+---@field public transform?  nil|Opts.Utils.Ribbon.Text.Transformer Function to transform text before processing.
 
 ---
 
----@enum Opts.Utils.Layout.Defaults.Colors
+---@enum Opts.Utils.Ribbon.Defaults.Colors
 ---| Black
 ---| Maroon
 ---| Green

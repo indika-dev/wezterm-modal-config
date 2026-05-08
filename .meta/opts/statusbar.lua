@@ -72,11 +72,11 @@ error "cannot require a meta file!"
 ---@alias Opts.StatusBar.Module.Layout
 ---| string
 ---| table
----| Layout
----| fun(ctx: Opts.StatusBar.Module.LayoutContext): string|table|Layout
+---| Ribbon
+---| fun(ctx: Opts.StatusBar.Module.LayoutContext): string|table|Ribbon
 ---
 ---@alias Opts.StatusBar.Module.LayoutContext
----| { layout: Layout, theme: table, fn: Fn, window: Window, pane: Pane }
+---| { layout: Ribbon.Api, theme: table, fn: Fn, window: Window, pane: Pane }
 ---
 ---@alias Opts.StatusBar.Module.Styler
 ---| { bg?: string, fg?: string, attributes?: string|string[] }

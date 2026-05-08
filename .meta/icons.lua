@@ -21,7 +21,7 @@ error "cannot require a meta file!"
 ---@field public Leader       string                Leader icon.
 ---@field public Ellipsis     string                Ellipsis icon.
 ---@field public Modes        Icons.Modes           Editor mode icons.
----@field public Picker       Icons.Picker          Picker icons.
+---@field public Lantern      Icons.Lantern         Lantern selector icons.
 ---@field public Sep          Icons.Sep             Separator configuration.
 ---@field public Bat          Icons.Bat             Battery icon configuration.
 ---@field public Nums         string[]              Numeric icons.
@@ -34,16 +34,16 @@ error "cannot require a meta file!"
 ---@field public font   string Font mode icon.
 ---@field public window string Window mode icon.
 ---@field public help   string Help mode icon.
----@field public pick   string Pick mode icon.
+---@field public lantern string Lantern mode icon.
 
----Picker utility icons.
----@class Icons.Picker
----@field public ico?   string                        General picker icon.
----@field public fuzzy? Icons.Picker.DescriptionIcons Icon pairs to use when formatting fuzzy description
----@field public exact? Icons.Picker.DescriptionIcons Icon pairs to use when formatting description.
+---Lantern utility icons.
+---@class Icons.Lantern
+---@field public ico?   string                         General Lantern icon.
+---@field public fuzzy? Icons.Lantern.DescriptionIcons Icon pairs to use when formatting fuzzy description.
+---@field public exact? Icons.Lantern.DescriptionIcons Icon pairs to use when formatting exact description.
 ---
 ---
----@alias Icons.Picker.DescriptionIcons {ico: string, punct: string}
+---@alias Icons.Lantern.DescriptionIcons {ico: string, punct: string}
 
 ---@class Icons.Sep
 ---@field public block  string              Full block character.

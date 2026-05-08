@@ -4,8 +4,7 @@ error "cannot require a meta file!"
 
 ---@class Opts.Utils
 ---@field public logger? Opts.Utils.Logger
----@field public layout? Opts.Utils.Layout
----@field public picker? Opts.Utils.Picker
+---@field public layout? Opts.Utils.Ribbon Ribbon configuration, loaded from `opts.utils.layout`.
 ---@field public config? Opts.Utils.Config
 
 -- luacheck: pop
