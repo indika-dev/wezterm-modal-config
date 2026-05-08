@@ -6,6 +6,7 @@
 local act = require("wezterm").action
 local key = require "utils.keymapper" ---@class Keymapper
 local icon = require("utils.icons").Modes
+local lantern = require "plugs.lantern" ---@class Lantern
 
 local Config = {}
 
@@ -236,18 +237,25 @@ key.tables(Config, {
     }
   end, -- }}}
 
-  -- {{{1 PICK MODE
-  pick_mode = function(theme)
+  -- {{{1 LANTERN MODE
+  lantern_mode = function(theme)
     return {
-      meta = { i = icon.pick, txt = "PICK", bg = theme.ansi[2], pad = 5 },
+      meta = { i = icon.lantern, txt = "LANTERN", bg = theme.ansi[2], pad = 3 },
       keys = {
         { "<ESC>", "PopKeyTable", "exit" },
         { "<C-S-A-Left>", key.hint_action(nil, -1), "" },
         { "<C-S-A-Right>", key.hint_action(nil, 1), "" },
-        { "c", require("picker.colorscheme"):pick(), "colorscheme" },
-        { "f", require("picker.font"):pick(), "font" },
-        { "s", require("picker.font-size"):pick(), "font size" },
-        { "l", require("picker.font-leading"):pick(), "line height" },
+        { "c", lantern.light.colorscheme(), "colorscheme" },
+        { "f", lantern.light.font(), "font" },
+        { "s", lantern.light.font_size(), "font size" },
+        { "l", lantern.light.font_leading(), "line height" },
+        { "g", lantern.light.gpu(), "GPU" },
+        { "o", lantern.light.window_opacity(), "window opacity" },
+        { "p", lantern.light.window_padding(), "window padding" },
+        { "u", lantern.light.cursor_style(), "cursor style" },
+        { "i", lantern.light.inactive_pane_opacity(), "inactive pane opacity" },
+        { "a", lantern.light.font_ligatures(), "font ligatures" },
+        { "t", lantern.light.tab_bar_style(), "tab bar style" },
       },
     }
   end, -- }}}

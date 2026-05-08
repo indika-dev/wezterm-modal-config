@@ -12,6 +12,6 @@ Config.webgpu_power_preference = (function()
   return (battery and battery.state_of_charge < 0.35) and "LowPower" or "HighPerformance"
 end)()
 
-Config.webgpu_preferred_adapter = require("picker.assets.gpus.gpus").pick_best()
+Config.webgpu_preferred_adapter = require("plugs.lantern").gpu().best()
 
 return Config

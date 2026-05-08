@@ -93,8 +93,8 @@ key.maps(Config, {
   },
   {
     "<leader>p",
-    act.ActivateKeyTable { name = "pick_mode", one_shot = true },
-    "pick mode",
+    act.ActivateKeyTable { name = "lantern_mode", one_shot = true },
+    "lantern mode",
   },
 
   -- ── F-key tab activation (F1-F24) ────────────────────────────────────────

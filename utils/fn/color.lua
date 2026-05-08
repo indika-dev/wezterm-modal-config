@@ -26,12 +26,13 @@ M.get_schemes = function()
       if type(name) ~= "string" then
         return nil
       end
-      local mod_path = "picker.assets.colorschemes." .. name
-      local ok, mod = pcall(require, mod_path)
-      if ok and mod and mod.scheme then
-        rawset(t, name, mod.scheme)
+      local ok, scheme = pcall(function()
+        return require("plugs.lantern").color.scheme(name)
+      end)
+      if ok and scheme then
+        rawset(t, name, scheme)
         M.log:debug("loaded %s colorscheme (lazy)", name)
-        return mod.scheme
+        return scheme
       end
       M.log:error("Unable to load colorscheme: '%s'", name)
       return nil

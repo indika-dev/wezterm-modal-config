@@ -2,6 +2,7 @@
 
 local wt = require "wezterm" ---@class Wezterm
 local act = wt.action
+local lantern = require "plugs.lantern" ---@class Lantern
 
 wt.on("augment-command-palette", function(_window, _pane)
   return {
@@ -18,24 +19,59 @@ wt.on("augment-command-palette", function(_window, _pane)
       },
     },
     {
-      brief = "Pick colorscheme",
+      brief = "Lantern: colorscheme",
       icon = "md_palette",
-      action = require("picker.colorscheme"):pick(),
+      action = lantern.light.colorscheme(),
     },
     {
-      brief = "Pick font",
+      brief = "Lantern: font",
       icon = "md_format_font",
-      action = require("picker.font"):pick(),
+      action = lantern.light.font(),
     },
     {
-      brief = "Pick font size",
+      brief = "Lantern: font size",
       icon = "md_format_font_size_decrease",
-      action = require("picker.font-size"):pick(),
+      action = lantern.light.font_size(),
     },
     {
-      brief = "Pick font leading",
+      brief = "Lantern: line height",
       icon = "fa_text_height",
-      action = require("picker.font-leading"):pick(),
+      action = lantern.light.font_leading(),
+    },
+    {
+      brief = "Lantern: GPU",
+      icon = "md_expansion_card",
+      action = lantern.light.gpu(),
+    },
+    {
+      brief = "Lantern: window opacity",
+      icon = "md_opacity",
+      action = lantern.light.window_opacity(),
+    },
+    {
+      brief = "Lantern: window padding",
+      icon = "md_dock_window",
+      action = lantern.light.window_padding(),
+    },
+    {
+      brief = "Lantern: cursor style",
+      icon = "md_cursor_text",
+      action = lantern.light.cursor_style(),
+    },
+    {
+      brief = "Lantern: inactive pane opacity",
+      icon = "md_blur_on",
+      action = lantern.light.inactive_pane_opacity(),
+    },
+    {
+      brief = "Lantern: font ligatures",
+      icon = "md_format_text",
+      action = lantern.light.font_ligatures(),
+    },
+    {
+      brief = "Lantern: tab bar style",
+      icon = "md_tab",
+      action = lantern.light.tab_bar_style(),
     },
     {
       brief = "Invalidate cache",

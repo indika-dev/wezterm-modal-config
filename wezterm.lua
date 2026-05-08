@@ -1,10 +1,10 @@
 require "events"
 
-local Picker = require "utils.picker" ---@class Picker
+local lantern = require "plugs.lantern" ---@class Lantern
 
 ---@class Configuration
 local config = require("config")
-  :add(Picker.restore())
+  :add(lantern.rekindle())
   :add(require "mappings.default")
   :add(require "mappings.modes")
   :init()
