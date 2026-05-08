@@ -1,7 +1,7 @@
 ---@module 'utils.renderer'
 
 local budget = require "utils.bar-budget" ---@class BarBudget
-local sb = require("utils.layout"):new "StatusBar" ---@class Layout
+local ribbon = require "plugs.ribbon" ---@class Ribbon.Api
 local warp = require "plugs.warp" ---@class Warp.Api
 local wt = require "wezterm" ---@class Wezterm
 local merge = warp.table.merge
@@ -26,9 +26,9 @@ local M = {
   width = { used = 0, available = 0 },
 }
 
--- Reusable Layout cell for assemble_cell (avoids Layout + Logger allocation
+-- Reusable Ribbon cell for assemble_cell (avoids Ribbon allocation
 -- per cell render).  Cleared via :clear() before each use.
-local _cell = sb:new "Cell"
+local _cell = ribbon:new "Cell"
 
 -- Reusable context table for resolve_layout (avoids per-call allocation).
 local _layout_ctx = {}
@@ -319,10 +319,10 @@ local function compute_overhead(module, sep)
   return pad_left, pad_right, overhead
 end
 
---- Assemble a Layout Cell from pre-resolved content.
+--- Assemble a Ribbon cell from pre-resolved content.
 ---
 --- Uses the module-level `_cell` instance (cleared on each call) to avoid
---- allocating a new Layout + Logger per cell render.
+--- allocating a new Ribbon per cell render.
 ---@param module       Opts.StatusBar.Module
 ---@param render_icon  string
 ---@param render_text  string
@@ -559,15 +559,15 @@ end
 ---
 --- Handles all four forms defined by `Opts.StatusBar.Module.Layout`:
 ---   • `string`  → returned as-is
----   • `Layout`  → calls `:format()`
+---   • `Ribbon`  → calls `:format()`
 ---   • `table`   → passed to `wezterm.format()`
----   • `fun(ctx) → string|table|Layout`  → called first, result normalised
+---   • `fun(ctx) → string|table|Ribbon`  → called first, result normalised
 ---
 ---@param  layout Opts.StatusBar.Module.Layout
 ---@return string
 local function resolve_layout(layout)
   if type(layout) == "function" then
-    _layout_ctx.layout = require "utils.layout"
+    _layout_ctx.layout = ribbon
     _layout_ctx.theme = M.theme
     _layout_ctx.warp = warp
     _layout_ctx.window = M.window
@@ -579,7 +579,7 @@ local function resolve_layout(layout)
     return layout
   end
 
-  -- Layout instance: has a callable :format() method.
+  -- Ribbon instance: has a callable :format() method.
   if type(layout) == "table" and type(layout.format) == "function" then
     return layout:format()
   end
@@ -649,7 +649,7 @@ end
 --- Render one module and append to `components` when it produces output.
 ---
 --- Handles two rendering paths:
----   1. `module.layout`    - arbitrary Layout / string / table / function;
+---   1. `module.layout`    - arbitrary Ribbon / string / table / function;
 ---                           rendered via `resolve_layout` and measured for
 ---                           the flexible-width budget.
 ---   2. `module.icon/text` - structured cell rendered by `format_cell` with

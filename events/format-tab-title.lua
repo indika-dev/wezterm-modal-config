@@ -1,7 +1,7 @@
 ---@module "events.format-tab-title"
 
 local Icon = require "utils.icons" ---@class Icons
-local Layout = require "utils.layout" ---@class Layout
+local Ribbon = require "plugs.ribbon" ---@class Ribbon.Api
 local budget = require "utils.bar-budget" ---@class BarBudget
 local warp = require "plugs.warp" ---@class Warp.Api
 local wt = require "wezterm" ---@class Wezterm
@@ -157,7 +157,7 @@ wt.on("format-tab-title", function(tab, tabs, _, config, hover, max_width)
   local title = resolve_title(pane, raw_title, title_budget)
   -- ─────────────────────────────────────────────────────────────────────────
 
-  local cell = Layout:new "TabTitle"
+  local cell = Ribbon:new "TabTitle"
   cell:append(bg, fg, left_sep, attributes)
   cell:append(fg, fg, " ", nil)
   cell:append(fg, bg, tab_idx .. " ", attributes)

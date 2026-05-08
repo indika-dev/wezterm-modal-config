@@ -813,7 +813,7 @@ M.hint = function(config, name, width, window)
   return body .. indicator
 end
 
----Build a fixed-width paginated hint as a **Layout instance**.
+---Build a fixed-width paginated hint as a **Ribbon instance**.
 ---
 ---Visual style matches the legacy modal-prompt style:
 ---  * `<` and `>` brackets: `theme.foreground`, bold
@@ -823,8 +823,8 @@ end
 ---  * Separator `" / "`: `theme.brights[1]`, not italic
 ---  * Padding and indicator: `theme.foreground`, plain
 ---
----Returns a `Layout` instance.  The renderer's `resolve_layout` detects it via
----`type(layout.format) == "function"` and calls `:format()` automatically, so
+---Returns a `Ribbon` instance.  The renderer's `resolve_layout` detects it via
+---`type(ribbon.format) == "function"` and calls `:format()` automatically, so
 ---the caller never needs to touch `wezterm.format()` directly.
 ---
 ---@usage
@@ -843,9 +843,9 @@ end
 ---@param width   number      desired output width in columns
 ---@param window  table       WezTerm window object
 ---@param opts    table       `{ theme: table, mode_bg: string }`
----@return Layout             Layout instance (call `:format()` to get the string)
+---@return Ribbon             Ribbon instance (call `:format()` to get the string)
 M.hint_layout = function(config, name, width, window, opts)
-  local Layout = require "utils.layout"
+  local Ribbon = require "plugs.ribbon"
   local theme = opts.theme
   local mode_bg = tostring(opts.mode_bg)
   local bg = tostring(theme.tab_bar.background)
@@ -855,7 +855,7 @@ M.hint_layout = function(config, name, width, window, opts)
 
   -- atomic = true so each :append() resets text attributes automatically,
   -- which means we never need to emit a manual "None" / ResetAttributes entry.
-  local layout = Layout:new("HintBar", true)
+  local layout = Ribbon:new("HintBar", true)
   local entries = resolve_entries(config, name)
   local items, indicator, ind_w = current_page(entries, width, window, name)
 

@@ -3,7 +3,7 @@ local wt = require "wezterm" ---@class Wezterm
 local Opts = require("opts").config.color ---@class Opts.Config.Color
 
 local Icon = require "utils.icons" ---@class Icons
-local layout = require "utils.layout" ---@class Layout
+local ribbon = require "plugs.ribbon" ---@class Ribbon.Api
 
 ---Manage and apply color schemes in Lua-based environment.
 ---Dynamically load schemes, determine scheme based on GUI appearance, and apply schemes
@@ -64,7 +64,7 @@ M.set_tab_button = function(Config, theme)
     local style = theme.tab_bar[state]
     local sep_bg, sep_fg = style.bg_color, theme.tab_bar.background
 
-    local bl = layout:new "ButtonLayout"
+    local bl = ribbon:new "ButtonLayout"
     local attributes = {
       style.intensity
         or (style.italic and "Italic")
