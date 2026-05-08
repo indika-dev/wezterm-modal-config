@@ -1,3 +1,9 @@
 local log = require("wezterm").plugin.require "https://github.com/sravioli/log.wz"
-log.setup(require "opts.utils.logger")
+
+log.setup {
+  enabled = true,
+  threshold = "WARN",
+  sinks = { default_enabled = true },
+}
+
 return log
