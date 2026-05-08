@@ -1,5 +1,5 @@
 local Opts = require("opts").config ---@class Opts.Config
-local color = require "utils.fn.color" ---@class Fn.Color
+local color = require "utils.color" ---@class Color
 
 local Config = {}
 

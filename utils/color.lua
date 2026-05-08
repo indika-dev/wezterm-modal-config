@@ -1,3 +1,5 @@
+---@module "utils.color"
+
 local wt = require "wezterm" ---@class Wezterm
 
 local Opts = require("opts").config.color ---@class Opts.Config.Color
@@ -8,12 +10,12 @@ local ribbon = require "plugs.ribbon" ---@class Ribbon.Api
 ---Manage and apply color schemes in Lua-based environment.
 ---Dynamically load schemes, determine scheme based on GUI appearance, and apply schemes
 ---to visual elements.
----@class Fn.Color
+---@class Color
 local M = {}
 
 ---Internal logger instance.
 ---@package
-M.log = require("plugs.log").new "Fn.Color"
+M.log = require("plugs.log").new "Color"
 
 ---Load color schemes lazily via `__index`.
 ---Schemes are loaded on first access by name, avoiding the startup cost of
@@ -53,7 +55,7 @@ end --~~}}}
 ---Set tab button style in configuration based on specified theme.
 ---Update configuration object with styles for `new_tab` and `new_tab_hover`.
 ---@param Config table Configuration object to update.
----@param theme Fn.Color.Theme Theme object containing specific tab states.
+---@param theme Color.Theme Theme object containing specific tab states.
 M.set_tab_button = function(Config, theme)
   Config.tab_bar_style = {}
   local sep = Icon.Sep.tb
@@ -83,7 +85,7 @@ end
 ---Configure color scheme and related visual settings.
 ---Apply background, character selection, and command palette colors based on theme.
 ---@param Config table Configuration to update with new color scheme.
----@param theme Fn.Color.Theme Valid colorscheme object.
+---@param theme Color.Theme Valid colorscheme object.
 ---@param name string Name of the color scheme to apply.
 M.set_scheme = function(Config, theme, name)
   Config.color_scheme = name
