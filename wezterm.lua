@@ -11,7 +11,7 @@ local config = require("config")
 
 local ok, overrides = pcall(require, "overrides.mappings")
 if ok then
-  require("utils.keymapper").apply_overrides(config, overrides)
+  require("plugs.chord").apply_overrides(config, overrides)
 end
 
 return config

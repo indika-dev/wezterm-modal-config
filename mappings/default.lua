@@ -4,7 +4,7 @@
 
 ---@diagnostic disable-next-line: undefined-field
 local act = require("wezterm").action
-local key = require "utils.keymapper" ---@class Keymapper
+local key = require "plugs.chord" ---@class Chord
 
 -- selene: allow(incorrect_standard_library_use)
 local tunpack = unpack or table.unpack

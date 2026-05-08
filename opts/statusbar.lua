@@ -141,7 +141,7 @@ local M = {
     },
 
     mode = function(window, _pane, theme)
-      local modes = require("utils.keymapper").get_modes(theme)
+      local modes = require("plugs.chord").get_modes(theme)
       local active_mode = window:active_key_table()
 
       if active_mode then
@@ -182,9 +182,9 @@ local M = {
     -- screen width, rendered tab cells, left-status columns, and the new-tab
     -- button - so the hint fills exactly the remaining space.
     keys = function(window, _, theme, config)
-      local keymapper = require "utils.keymapper"
+      local chord = require "plugs.chord"
       local renderer = require "utils.renderer"
-      local modes = keymapper.get_modes(theme)
+      local modes = chord.get_modes(theme)
       local active = window:active_key_table()
 
       if not active then
@@ -205,7 +205,7 @@ local M = {
         -- ctx.theme is the renderer's current resolved colour scheme.
         layout = function(ctx)
           local width = math.max(0, renderer.width.available - renderer.width.used)
-          local hint = keymapper.hint_layout(config, active, width, window, {
+          local hint = chord.hint_layout(config, active, width, window, {
             theme = ctx.theme,
             mode_bg = mode.bg,
           })
