@@ -5,8 +5,8 @@
 ---@diagnostic disable-next-line: undefined-field
 local act = require("wezterm").action
 local key = require "plugs.chord" ---@class Chord
-local icon = require("utils.icons").Modes
 local lantern = require "plugs.lantern" ---@class Lantern
+local icon = require("plugs.sigil").symbol "Modes"
 
 local Config = {}
 

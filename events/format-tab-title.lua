@@ -1,14 +1,14 @@
 ---@module "events.format-tab-title"
 
-local Icon = require "utils.icons" ---@class Icons
 local Ribbon = require "plugs.ribbon" ---@class Ribbon.Api
 local budget = require "utils.bar-budget" ---@class BarBudget
+local sigil = require "plugs.sigil" ---@class Sigil.Api
 local warp = require "plugs.warp" ---@class Warp.Api
 local wt = require "wezterm" ---@class Wezterm
 local fs = warp.filesystem ---@class Warp.FileSystem
-local path = warp.path ---@class Warp.Path
 local str = warp.string ---@class Warp.String
 
+local Icon = sigil.symbols()
 local tabseps = Icon.Sep.tb
 
 local SHELLS = {
@@ -27,6 +27,14 @@ local SHELLS = {
 local HOME = fs.home
 local HOME_BASENAME = fs.basename(HOME)
 
+local function has_process_icon(process)
+  return sigil.get(process, { fallback = false }) ~= nil
+end
+
+local function process_icon(process)
+  return sigil.icon(process, { fallback = false }) or ""
+end
+
 local function truncate(text, budget, callback)
   if str.width(text) <= budget then
     return text
@@ -42,11 +50,11 @@ end
 
 local function parse_title(title)
   local rest_candidate, proc_candidate = title:match "^(.-)%s*%-%s*(%S+)$"
-  if proc_candidate and Icon.Progs[proc_candidate] then
+  if proc_candidate and has_process_icon(proc_candidate) then
     return proc_candidate, rest_candidate
   else
     local proc_candidate2, rest_candidate2 = title:match "^(%S+)%s*%-?%s*(.*)$"
-    if proc_candidate2 and Icon.Progs[proc_candidate2] then
+    if proc_candidate2 and has_process_icon(proc_candidate2) then
       return proc_candidate2, rest_candidate2
     end
   end
@@ -59,7 +67,7 @@ local function format_shell(process, rest, title_budget)
     cwd = "~"
   end
 
-  local prefix = (Icon.Progs[process] or "") .. " in "
+  local prefix = process_icon(process) .. " in "
   local prefix_width = str.width(prefix)
 
   cwd = truncate(cwd, title_budget - prefix_width, str.truncate_right)
@@ -71,7 +79,7 @@ local function format_neovim(pane, title_budget)
   local cwd = cwd_url and fs.basename(cwd_url.file_path) or ""
   cwd = cwd:gsub(HOME_BASENAME, "󰋜 ")
 
-  local prefix = (Icon.Progs["nvim"] or "") .. " (" .. Icon.Folder .. " "
+  local prefix = process_icon("nvim") .. " (" .. Icon.Folder .. " "
   local suffix = ")"
   local decoration_width = str.width(prefix .. suffix)
 
@@ -103,7 +111,7 @@ local function resolve_title(pane, raw_title, title_budget)
 
   -- Default treatment
   if process then
-    title = (Icon.Progs[process] or "") .. " " .. (rest or "")
+    title = process_icon(process) .. " " .. (rest or "")
   end
 
   return truncate(title, title_budget, truncate_with_ellipsis)

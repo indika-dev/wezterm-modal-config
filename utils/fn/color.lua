@@ -2,7 +2,7 @@ local wt = require "wezterm" ---@class Wezterm
 
 local Opts = require("opts").config.color ---@class Opts.Config.Color
 
-local Icon = require "utils.icons" ---@class Icons
+local Icon = require("plugs.sigil").symbols()
 local ribbon = require "plugs.ribbon" ---@class Ribbon.Api
 
 ---Manage and apply color schemes in Lua-based environment.

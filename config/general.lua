@@ -1,7 +1,7 @@
 local warp = require "plugs.warp" ---@class Warp.Api
 local fs = warp.filesystem ---@class Warp.FileSystem
 
-local Icons = require "utils.icons" ---@class Icons
+local sigil = require "plugs.sigil" ---@class Sigil.Api
 
 local Config = {}
 
@@ -11,7 +11,7 @@ if fs.is_win then
 
   Config.launch_menu = {
     {
-      label = Icons.Progs["pwsh.exe"] .. " PowerShell V7",
+      label = sigil.icon "pwsh.exe" .. " PowerShell V7",
       args = {
         "pwsh",
         "-NoLogo",
@@ -22,12 +22,12 @@ if fs.is_win then
       cwd = "~",
     },
     {
-      label = Icons.Progs["pwsh.exe"] .. " PowerShell V5",
+      label = sigil.icon "pwsh.exe" .. " PowerShell V5",
       args = { "powershell" },
       cwd = "~",
     },
     { label = "Command Prompt", args = { "cmd.exe" }, cwd = "~" },
-    { label = Icons.Progs["git"] .. " Git bash", args = { "sh", "-l" }, cwd = "~" },
+    { label = sigil.icon "git" .. " Git bash", args = { "sh", "-l" }, cwd = "~" },
   }
 
   -- ref: https://wezfurlong.org/wezterm/config/lua/WslDomain.html

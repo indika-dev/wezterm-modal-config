@@ -9,7 +9,7 @@ local maths = warp.maths ---@class Warp.Maths
 local mfloor = math.floor
 
 local cond = require "utils.conditions" ---@class Conditions
-local icons = require "utils.icons" ---@class Icons
+local icons = require("plugs.sigil").symbols()
 
 ---Build a four-stop colour palette from the theme's accent colour.
 ---Render order (left → right): cwd · hostname · clock · battery
