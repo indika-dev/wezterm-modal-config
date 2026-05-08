@@ -76,7 +76,7 @@ error "cannot require a meta file!"
 ---| fun(ctx: Opts.StatusBar.Module.LayoutContext): string|table|Ribbon
 ---
 ---@alias Opts.StatusBar.Module.LayoutContext
----| { layout: Ribbon.Api, theme: table, fn: Fn, window: Window, pane: Pane }
+---| { layout: Ribbon.Api, theme: table, warp: Warp.Api, window: Window, pane: Pane }
 ---
 ---@alias Opts.StatusBar.Module.Styler
 ---| { bg?: string, fg?: string, attributes?: string|string[] }
