@@ -1,4 +1,4 @@
----@module "opts.utils.layout"
+---@module "opts.utils.ribbon"
 
 ---@class Opts.Utils.Ribbon
 return {

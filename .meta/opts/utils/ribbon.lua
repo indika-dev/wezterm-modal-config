@@ -5,9 +5,6 @@ error "cannot require a meta file!"
 
 ---Configuration passed to `ribbon.wz`.
 ---
----The path remains `opts.utils.layout` for compatibility with the main config,
----but the values configure the standalone Ribbon plugin.
----
 ---@class Opts.Utils.Ribbon: Opts.Utils.Base
 ---@field public defaults?            Opts.Utils.Ribbon.Defaults
 ---@field public attribute_aliases?   Opts.Utils.Ribbon.AttributeAliases

@@ -7,7 +7,7 @@ error "cannot require a meta file!"
 
 ---@class Opts.Utils
 ---@field public logger? Opts.Utils.Logger
----@field public layout? Opts.Utils.Ribbon Ribbon configuration, loaded from `opts.utils.layout`.
+---@field public ribbon? Opts.Utils.Ribbon Ribbon configuration, loaded from `opts.utils.ribbon`.
 ---@field public config? Opts.Utils.Config
 
 -- luacheck: pop

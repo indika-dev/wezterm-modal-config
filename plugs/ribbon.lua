@@ -4,6 +4,6 @@
 
 local ribbon = require("wezterm").plugin.require "https://github.com/sravioli/ribbon.wz"
 
-ribbon.setup(require("opts").utils.layout)
+ribbon.setup(require("opts").utils.ribbon)
 
 return ribbon

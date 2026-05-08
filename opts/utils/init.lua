@@ -3,6 +3,6 @@
 ---@class Opts.Utils
 return {
   logger = require "opts.utils.logger",
-  layout = require "opts.utils.layout",
+  ribbon = require "opts.utils.ribbon",
   config = require "opts.utils.config",
 }
