@@ -10,8 +10,20 @@ local lantern = require "plugs.lantern" ---@class Lantern
 
 local M = {}
 
+local function native_mode(name, enter, spec)
+  local mode = key.mode(name, spec)
+
+  function mode.activate(_, lhs, desc)
+    return key.key(lhs, enter(), desc)
+  end
+
+  return mode
+end
+
 -- {{{1 COPY MODE
-M.copy = key.mode("copy_mode", function(theme)
+M.copy = native_mode("copy_mode", function()
+  return act.ActivateCopyMode
+end, function(theme)
   return {
     meta = { i = icon.copy, txt = "COPY", bg = theme.brights[3], pad = 5 },
     keys = {
@@ -69,7 +81,9 @@ M.copy = key.mode("copy_mode", function(theme)
 end) -- }}}
 
 -- {{{1 SEARCH MODE
-M.search = key.mode("search_mode", function(theme)
+M.search = native_mode("search_mode", function()
+  return act.Search "CurrentSelectionOrEmptyString"
+end, function(theme)
   return {
     meta = { i = icon.search, txt = "SEARCH", bg = theme.brights[4], pad = 5 },
     keys = {
@@ -87,16 +101,6 @@ M.search = key.mode("search_mode", function(theme)
     },
   }
 end) -- }}}
-
--- Copy/search need WezTerm's built-in entry actions to initialize their state;
--- their keymaps are still registered through key.tables(Config, M.all()).
-function M.copy.activate(_, lhs, desc)
-  return { lhs, act.ActivateCopyMode, desc }
-end
-
-function M.search.activate(_, lhs, desc)
-  return { lhs, act.Search "CurrentSelectionOrEmptyString", desc }
-end
 
 -- {{{1 FONT MODE
 M.font = key.mode("font_mode", function(theme)
