@@ -1,5 +1,6 @@
 require "events"
 
+local chord = require "plugs.chord" ---@class Chord
 local lantern = require "plugs.lantern" ---@class Lantern
 
 ---@class Configuration
@@ -11,7 +12,9 @@ local config = require("config")
 
 local ok, overrides = pcall(require, "overrides.mappings")
 if ok then
-  require("plugs.chord").apply_overrides(config, overrides)
+  chord.apply_overrides(config, overrides)
 end
+
+chord.command.apply(config)
 
 return config

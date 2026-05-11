@@ -69,7 +69,7 @@ A good bug report shouldn't leave others needing to chase you up for more inform
   - WezTerm version (`wezterm --version`)
   - OS, Platform and Version (Windows, Linux, macOS, x86, ARM)
   - Error output from WezTerm's debug overlay (`Ctrl+Shift+L`)
-  - GPU information if the issue is rendering-related (`wezterm ls-fonts --list-system` or the GPU picker output)
+  - GPU information if the issue is rendering-related (`wezterm ls-fonts --list-system` or Lantern GPU output)
   - Any relevant files in your `overrides/` directory
   - Your input and the output
   - Can you reliably reproduce the issue? And can you also reproduce it with older versions?
@@ -193,14 +193,14 @@ Rename-Item "$env:USERPROFILE\.config\wezterm.bak" "wezterm"
 
 The project is a modular WezTerm configuration written in Lua. Here's how it fits together:
 
-- **`wezterm.lua`** - Entry point. Loads events (side-effect), builds the config via `Config:add()` chaining, applies mappings, then merges overrides.
+- **`wezterm.lua`** - Entry point. Loads events (side-effect), builds the config via `Config:add()` chaining, applies mapping overrides through Chord, then registers Chord commands.
 - **`config/`** - Config modules (appearance, font, GPU, tab bar, general). Each returns a table of WezTerm options.
 - **`events/`** - WezTerm event handlers (status bar, tab title, window title, etc.). Conditionally loaded based on `Opts`.
 - **`mappings/`** - Keybindings using Vim-style notation (`<C-S-a>`, `<leader>w`). Split into `default.lua` (global keys) and `modes.lua` (modal key tables).
-- **`opts/`** - Central configuration registry. Controls feature flags, statusbar layout, logger settings, and more. All features check `Opts.X.enabled` before loading.
-- **`picker/`** - Interactive pickers (colorscheme, font, font size, GPU) with asset modules in `picker/assets/`.
-- **`utils/`** - Shared utilities: config builder, keymapper, layout engine, renderer, logger, assertion library, string/table/color helpers.
-- **`plugins/`** - Plugin system (`nap.wzt`). Plugins are loaded via `wezterm.plugin.require`.
+- **`opts/`** - Central configuration registry. Controls feature flags, statusbar modules, and local config-builder options. Optional features check `Opts.X.enabled` before loading.
+- **`plugs/`** - Central plugin wrappers. Consumer modules require `plugs.<name>` instead of calling `wezterm.plugin.require()` directly.
+- **`utils/`** - Shared utilities that remain local to this config: config builder, renderer, bar budget, conditions, color helpers, and assertion helpers.
+- **`plugins/`** - Local source checkouts for standalone `.wz` plugins. Published plugins are loaded through `plugs/`.
 - **`overrides/`** - **User customization layer.** Each subdirectory (`config/`, `events/`, `mappings/`, `opts/`) is loaded with `pcall(require, "overrides.<module>")`. If the file exists it's merged in, otherwise it's silently skipped.
 
 > [!IMPORTANT]
@@ -244,10 +244,10 @@ type(scope): description
 
 Examples:
 ```
-feat(picker): add Gruvbox colorscheme
+feat(lantern): add Gruvbox colorscheme
 fix(statusbar): correct padding calculation on resize
 docs(readme): update installation instructions
-refactor(keymapper): simplify modifier parsing
+refactor(chord): simplify modifier parsing
 ```
 
 #### Commit types
@@ -269,7 +269,7 @@ refactor(keymapper): simplify modifier parsing
 
 #### Scopes
 
-Scopes are freeform but should match a directory or feature area: `config`, `events`, `mappings`, `opts`, `picker`, `utils`, `statusbar`, `plugins`, `keymapper`, `renderer`, etc.
+Scopes are freeform but should match a directory or feature area: `config`, `events`, `mappings`, `opts`, `lantern`, `chord`, `ribbon`, `sigil`, `utils`, `statusbar`, `plugins`, `renderer`, etc.
 
 #### Additional rules
 
