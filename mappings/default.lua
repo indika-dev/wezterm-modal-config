@@ -70,16 +70,8 @@ key.maps(Config, {
   modes.help:activate("<leader>h", "help", { one_shot = true }),
   modes.window:activate("<leader>w", "window mode"),
   modes.font:activate("<leader>f", "font mode"),
-  {
-    "<leader>c",
-    act.ActivateCopyMode,
-    "copy mode",
-  },
-  {
-    "<leader>s",
-    act.Search "CurrentSelectionOrEmptyString",
-    "search mode",
-  },
+  modes.copy:activate("<leader>c", "copy mode"),
+  modes.search:activate("<leader>s", "search mode"),
   modes.lantern:activate("<leader>p", "lantern mode", { one_shot = true }),
 
   -- ── F-key tab activation (F1-F24) ────────────────────────────────────────

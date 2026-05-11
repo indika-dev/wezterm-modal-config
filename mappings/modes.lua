@@ -88,6 +88,16 @@ M.search = key.mode("search_mode", function(theme)
   }
 end) -- }}}
 
+-- Copy/search need WezTerm's built-in entry actions to initialize their state;
+-- their keymaps are still registered through key.tables(Config, M.all()).
+function M.copy.activate(_, lhs, desc)
+  return { lhs, act.ActivateCopyMode, desc }
+end
+
+function M.search.activate(_, lhs, desc)
+  return { lhs, act.Search "CurrentSelectionOrEmptyString", desc }
+end
+
 -- {{{1 FONT MODE
 M.font = key.mode("font_mode", function(theme)
   return {
@@ -194,8 +204,8 @@ M.help = key.mode("help_mode", function(theme)
       M.help:activate("<leader>h", "help", { one_shot = true }),
       M.window:activate("<leader>w", "window mode"),
       M.font:activate("<leader>f", "font mode"),
-      { "<leader>c", act.ActivateCopyMode, "copy mode" },
-      { "<leader>s", act.Search "CurrentSelectionOrEmptyString", "search mode" },
+      M.copy:activate("<leader>c", "copy mode"),
+      M.search:activate("<leader>s", "search mode"),
     },
   }
 end) -- }}}
