@@ -59,7 +59,7 @@ local monaspace_neon_features = {
 
 Config.font = wt.font_with_fallback {
   {
-    family = "Monaspace Neon Frozen",
+    family = "Monaspace Neon NF",
     weight = "Regular",
     harfbuzz_features = monaspace_neon_features,
   },

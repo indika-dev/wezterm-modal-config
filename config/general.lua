@@ -22,12 +22,12 @@ if fs.platform().is_win then
       cwd = "~",
     },
     {
-      label = Icons.Progs["pwsh.exe"] .. " PowerShell V5",
-      args = { "powershell" },
+      label = Icons.Progs["wsl.exe"] .. " Fedora 44",
+      args = { "--cd ~" },
       cwd = "~",
     },
-    { label = "Command Prompt", args = { "cmd.exe" }, cwd = "~" },
-    { label = Icons.Progs["git"] .. " Git bash", args = { "sh", "-l" }, cwd = "~" },
+    -- { label = "Command Prompt", args = { "cmd.exe" }, cwd = "~" },
+    -- { label = Icons.Progs["git"] .. " Git bash", args = { "sh", "-l" }, cwd = "~" },
   }
 
   -- ref: https://wezfurlong.org/wezterm/config/lua/WslDomain.html
@@ -35,15 +35,14 @@ if fs.platform().is_win then
     {
       name = "WSL:Ubuntu",
       distribution = "Ubuntu",
-      username = "sravioli",
+      username = "stefan.maassen",
       default_cwd = "~",
-      default_prog = { "bash", "-i", "-l" },
     },
     {
-      name = "WSL:Alpine",
-      distribution = "Alpine",
-      username = "sravioli",
-      default_cwd = "/home/sravioli",
+      name = "WSL:FedoraLinux-44",
+      distribution = "FedoraLinux-44",
+      username = "stefan.maassen",
+      default_cwd = "~",
     },
   }
 end
@@ -55,5 +54,7 @@ Config.ssh_domains = {}
 
 -- ref: https://wezfurlong.org/wezterm/multiplexing.html#unix-domains
 Config.unix_domains = {}
+
+Config.default_domain = "WSL:FedoraLinux-44"
 
 return Config

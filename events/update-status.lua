@@ -22,6 +22,7 @@ local fs, mt, str, tbl = fn.fs, fn.mt, fn.str, fn.tbl
 wt.on("update-status", function(window, pane)
   local Config, Overrides = window:effective_config(), window:get_config_overrides() or {}
   local theme = Config.color_schemes[Overrides.color_scheme or Config.color_scheme]
+  theme = Config.color_schemes["Kanagawa Dragon"]
 
   --~ {{{2: Valid modes
 
@@ -216,7 +217,7 @@ wt.on("update-status", function(window, pane)
     local rsep = sep.sb.right
 
     rsb:append(cell_fg, cell_bg, rsep)
-    rsb:append(cell_bg, theme.tab_bar.background, str.pad(cells[i]), { "Bold" })
+    -- rsb:append(cell_bg, theme.tab_bar.background, str.pad(cells[i]), { "Bold" })
   end
   --~ }}}
 
