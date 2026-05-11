@@ -5,6 +5,7 @@
 ---@diagnostic disable-next-line: undefined-field
 local act = require("wezterm").action
 local key = require "plugs.chord" ---@class Chord
+local modes = require "mappings.modes"
 
 -- selene: allow(incorrect_standard_library_use)
 local tunpack = unpack or table.unpack
@@ -66,21 +67,9 @@ key.maps(Config, {
   { "<C-M-k>", act.ActivatePaneDirection "Up", "move up" },
   { "<C-M-l>", act.ActivatePaneDirection "Right", "move right" },
 
-  {
-    "<leader>h",
-    act.ActivateKeyTable { name = "help_mode", one_shot = true },
-    "help",
-  },
-  {
-    "<leader>w",
-    act.ActivateKeyTable { name = "window_mode", one_shot = false },
-    "window mode",
-  },
-  {
-    "<leader>f",
-    act.ActivateKeyTable { name = "font_mode", one_shot = false },
-    "font mode",
-  },
+  modes.help:activate("<leader>h", "help", { one_shot = true }),
+  modes.window:activate("<leader>w", "window mode"),
+  modes.font:activate("<leader>f", "font mode"),
   {
     "<leader>c",
     act.ActivateCopyMode,
@@ -91,11 +80,7 @@ key.maps(Config, {
     act.Search "CurrentSelectionOrEmptyString",
     "search mode",
   },
-  {
-    "<leader>p",
-    act.ActivateKeyTable { name = "lantern_mode", one_shot = true },
-    "lantern mode",
-  },
+  modes.lantern:activate("<leader>p", "lantern mode", { one_shot = true }),
 
   -- ── F-key tab activation (F1-F24) ────────────────────────────────────────
   tunpack(fkey_mappings),

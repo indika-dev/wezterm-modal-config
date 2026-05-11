@@ -2,10 +2,18 @@
 
 local wt = require "wezterm" ---@class Wezterm
 local act = wt.action
+local chord = require "plugs.chord" ---@class Chord
 local lantern = require "plugs.lantern" ---@class Lantern
 
+local function append_entries(entries, extra)
+  for _, entry in ipairs(extra or {}) do
+    entries[#entries + 1] = entry
+  end
+  return entries
+end
+
 wt.on("augment-command-palette", function(_window, _pane)
-  return {
+  local entries = {
     {
       brief = "Rename tab",
       icon = "md_rename_box",
@@ -81,4 +89,6 @@ wt.on("augment-command-palette", function(_window, _pane)
       end),
     },
   }
+
+  return append_entries(entries, chord.palette())
 end)

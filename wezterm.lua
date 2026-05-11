@@ -7,7 +7,7 @@ local lantern = require "plugs.lantern" ---@class Lantern
 local config = require("config")
   :add(lantern.rekindle())
   :add(require "mappings.default")
-  :add(require "mappings.modes")
+  :add(require("mappings.modes").config)
   :init()
 
 local ok, overrides = pcall(require, "overrides.mappings")
@@ -15,6 +15,6 @@ if ok then
   chord.apply_overrides(config, overrides)
 end
 
-chord.command.apply(config)
+chord.apply(config)
 
 return config
