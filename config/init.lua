@@ -1,7 +1,8 @@
 ---@class Configuration
 local Config = require "utils.config"
 
-return Config:add("config.appearance")
+return Config:reset()
+  :add("config.appearance")
   :add("config.font")
   :add("config.tab-bar")
   :add("config.general")

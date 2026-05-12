@@ -9,6 +9,13 @@ local M = {
 }
 M.__index = M
 
+---Clear the module load queue.
+---@return table self
+function M:reset()
+  self.modules = {}
+  return self
+end
+
 ---Add a module to the load queue
 ---@param name_or_module string|table|fun(): table
 ---@return table self
