@@ -78,7 +78,7 @@ Six operational modes with inline key hints. The leader key is `<C-Space>`.
 | `<leader>f` | Font | Adjust font size interactively |
 | `<leader>c` | Copy | Vim-style text selection |
 | `<leader>s` | Search | Pattern matching and navigation |
-| `<leader>p` | Pick | Colorscheme, font, size, leading |
+| `<leader>p` | Lantern | Pickers for theme, font, GPU, window, cursor, and tab styling |
 
 Prompts are responsive - they paginate when the terminal is narrow.
 
@@ -96,12 +96,19 @@ Prompts are responsive - they paginate when the terminal is narrow.
 
 ### Interactive pickers
 
-Four built-in pickers wrapping WezTerm's `InputSelector`:
+Built-in pickers wrap WezTerm's `InputSelector` through `lantern.wz`:
 
-1. **Colorscheme** - 30+ themes with inline palette preview
+1. **Colorscheme** - nearly 30 themes with inline palette preview
 2. **Font** - 19 NerdFont families
 3. **Font size** - Preset sizes
 4. **Font leading** - Line spacing presets
+5. **GPU** - Adapter selection from `wezterm.gui.enumerate_gpus()`
+6. **Window opacity** - Background opacity presets
+7. **Window padding** - Compact through wide padding presets
+8. **Cursor style** - Steady and blinking cursor shapes
+9. **Inactive pane opacity** - Inactive pane dimming presets
+10. **Font ligatures** - Standard, discretionary, or disabled ligatures
+11. **Tab bar style** - Native, retro, or powerline tab styling
 
 <details>
 <summary>See picker screenshots</summary>
@@ -116,7 +123,8 @@ Four built-in pickers wrapping WezTerm's `InputSelector`:
 ### Vim-style keybindings
 
 50+ keybindings using Vim notation, auto-translated to WezTerm's native format.
-All customizable in `mappings/default.lua`.
+Global bindings live in `mappings/default.lua`; modal tables live in
+`mappings/modes.lua`.
 
 ```lua
 -- Vim syntax is automatically translated:
