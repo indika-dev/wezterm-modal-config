@@ -1,56 +1,30 @@
-## Description
-Describe what changed and why. Include the problem this fixes or the feature it
-adds.
+Thanks for contributing to this WezTerm configuration.
 
-**Fixes**: Closes #(issue number) ← _if applicable_
+This default template only points to the focused pull request templates. Please
+use the one that best matches your change:
 
-## Types of changes
-What types of changes does your code introduce to this config?
-Put an `x` in the boxes that apply.
+- Configuration change:
+  - Template file:
+    https://github.com/sravioli/wezterm/blob/main/.github/PULL_REQUEST_TEMPLATE/config_change.md
+  - Query parameter: `?template=config_change.md`
+- Plugin migration:
+  - Template file:
+    https://github.com/sravioli/wezterm/blob/main/.github/PULL_REQUEST_TEMPLATE/plugin_migration.md
+  - Query parameter: `?template=plugin_migration.md`
+- Bug fix:
+  - Template file:
+    https://github.com/sravioli/wezterm/blob/main/.github/PULL_REQUEST_TEMPLATE/bug_fix.md
+  - Query parameter: `?template=bug_fix.md`
+- Documentation:
+  - Template file:
+    https://github.com/sravioli/wezterm/blob/main/.github/PULL_REQUEST_TEMPLATE/documentation.md
+  - Query parameter: `?template=documentation.md`
 
-- [ ] Bugfix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] Configuration change
-- [ ] Documentation Update
-- [ ] Performance improvement
-- [ ] Code refactoring
+To use one, reopen this pull request with the matching `?template=...` value in
+the URL and replace this placeholder body with the selected template.
 
-## Changes made
-List the specific changes made in this PR:
+Example:
 
-- Change 1
-- Change 2
-- Change 3
-
-## Testing
-Describe how you tested your changes:
-
-- [ ] Tested on Linux
-- [ ] Tested on macOS
-- [ ] Tested on Windows
-- [ ] Manual testing steps: _(describe here)_
-- [ ] No new testing needed
-
-## Breaking changes?
-_If yes, describe what breaks and how users should migrate_
-
-- [ ] Yes
-- [ ] No
-
-## Screenshots or videos (if applicable)
-Add any screenshots, recordings, or demos that help illustrate the changes.
-
-## Checklist
-Put an `x` in the boxes that apply. You can also fill these out after creating
-the PR.
-
-- [ ] I have read the [CONTRIBUTING](https://github.com/sravioli/wezterm/blob/main/.github/contributing.md) doc
-- [ ] My changes follow the project's style and conventions
-- [ ] I have updated relevant documentation (if appropriate)
-- [ ] I have tested my changes thoroughly
-- [ ] My commits are descriptive and follow best practices
-- [ ] I have not introduced any new warnings or errors
-
-## Additional notes
-Any other information that reviewers should know about these changes (rationale, alternatives considered, etc.)
+```text
+https://github.com/sravioli/wezterm/compare/<branch-name>?template=config_change.md
+```
