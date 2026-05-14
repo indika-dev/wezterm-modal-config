@@ -13,7 +13,8 @@ Is your feature request related to a problem? Describe it clearly.
 - Who would benefit from this feature?
 
 ## Proposed solution
-A clear and concise description of what you want to happen.
+Describe what you want to happen.
+
 - How should this feature work?
 - What would be the expected behavior?
 
@@ -24,9 +25,10 @@ Describe any alternative solutions or features you've considered.
 
 ## Use cases
 Explain specific scenarios where this feature would be useful.
+
 - Workflow improvements
 - Time savings
-- Enhanced functionality
+- Functionality that is currently missing
 
 ## Additional context
 Add any other context, mockups, or screenshots about the feature request.

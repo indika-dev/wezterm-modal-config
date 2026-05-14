@@ -8,7 +8,7 @@ assignees: sravioli
 ---
 
 ## Describe the bug
-A clear and concise description of what the bug is.
+Describe what is going wrong.
 
 ## To reproduce
 Steps to reproduce the behavior:
@@ -18,13 +18,13 @@ Steps to reproduce the behavior:
 4. See error
 
 ## Expected behavior
-A clear and concise description of what you expected to happen.
+Describe what you expected to happen.
 
 ## Actual behavior
 What actually happens instead. Include error messages if any.
 
 ## Environment
-Please complete the following information:
+Please include:
 - **OS**: [e.g., Linux, Windows, macOS]
 - **WezTerm Version**: [e.g., `wezterm 20240715-080945-c9116830`]
 - **Shell**: [e.g., bash, zsh, PowerShell]
@@ -32,6 +32,7 @@ Please complete the following information:
 
 ## Config details (if applicable)
 If this is related to your custom configuration:
+
 - Relevant sections from your `wezterm.lua` or config files
 - Any custom scripts or extensions being used
 

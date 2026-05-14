@@ -12,12 +12,14 @@ Describe what you're trying to achieve with your configuration.
 
 ## What you've tried
 Describe what you've already attempted to solve this:
+
 - Configuration changes you've made
 - Resources you've consulted
 - Workarounds you've tried
 
 ## Current configuration
 Paste the relevant sections of your `wezterm.lua` or config files:
+
 ```lua
 -- Your config here
 ```
@@ -29,6 +31,7 @@ Paste the relevant sections of your `wezterm.lua` or config files:
 
 ## Error messages
 If you're seeing any error messages, paste them here:
+
 ```
 Error message here
 ```
@@ -40,4 +43,5 @@ Describe the expected behavior.
 If helpful, add screenshots showing the current state vs. expected state.
 
 ## Additional context
-Any other details that might help others understand your issue (other tools you use, your workflows, etc.)
+Add anything else that might help, such as other tools you use or workflow
+details.

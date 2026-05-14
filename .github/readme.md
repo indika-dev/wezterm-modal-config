@@ -2,9 +2,9 @@
 
 ![Configuration showcase](./imgs/showcase.png)
 
-A feature-rich, highly customizable [WezTerm](https://wezfurlong.org/wezterm/)
-configuration. Responsive status bar, Vim-style modal keybindings, interactive
-pickers, and a powerful override system - all in pure Lua.
+A modular [WezTerm](https://wezfurlong.org/wezterm/) configuration written in
+Lua. It includes a responsive status bar, Vim-style modal keybindings,
+interactive pickers, and an override system for local changes.
 
 ## Installation
 
@@ -55,9 +55,9 @@ pickers, and a powerful override system - all in pure Lua.
 
 https://github.com/user-attachments/assets/d8bd96f1-53d6-4fb0-9771-53ca8ecd604b
 
-The status bar adapts gracefully to terminal width. Each element has multiple
-fallback modes - from full detail down to icon-only - ensuring important
-information is always visible.
+The status bar adapts to the available terminal width. Each element has
+fallback modes, from full detail down to icon-only, so important information can
+stay visible in narrower windows.
 
 > [!NOTE]
 >
@@ -69,7 +69,7 @@ information is always visible.
 
 ![Help mode](./imgs/showcase-mode-help.png)
 
-Six operational modes with inline key hints. The leader key is `<C-Space>`.
+Six modal tables provide inline key hints. The leader key is `<C-Space>`.
 
 | Leader combo | Mode | Description |
 |-------------|------|-------------|
@@ -122,7 +122,8 @@ Built-in pickers wrap WezTerm's `InputSelector` through `lantern.wz`:
 
 ### Vim-style keybindings
 
-50+ keybindings using Vim notation, auto-translated to WezTerm's native format.
+More than 50 keybindings use Vim notation and are translated to WezTerm's
+native format.
 Global bindings live in `mappings/default.lua`; modal tables live in
 `mappings/modes.lua`.
 

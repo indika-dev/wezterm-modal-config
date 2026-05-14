@@ -1,11 +1,12 @@
 ## Description
-Describe the big picture of your changes here. Include context about what problem this solves or what feature it adds.
+Describe what changed and why. Include the problem this fixes or the feature it
+adds.
 
 **Fixes**: Closes #(issue number) ← _if applicable_
 
 ## Types of changes
 What types of changes does your code introduce to this config?
-*Put an `x` in the boxes that apply*
+Put an `x` in the boxes that apply.
 
 - [ ] Bugfix (non-breaking change which fixes an issue)
 - [ ] New feature (non-breaking change which adds functionality)
@@ -17,12 +18,14 @@ What types of changes does your code introduce to this config?
 
 ## Changes made
 List the specific changes made in this PR:
+
 - Change 1
 - Change 2
 - Change 3
 
 ## Testing
 Describe how you tested your changes:
+
 - [ ] Tested on Linux
 - [ ] Tested on macOS
 - [ ] Tested on Windows
@@ -31,6 +34,7 @@ Describe how you tested your changes:
 
 ## Breaking changes?
 _If yes, describe what breaks and how users should migrate_
+
 - [ ] Yes
 - [ ] No
 
@@ -38,7 +42,8 @@ _If yes, describe what breaks and how users should migrate_
 Add any screenshots, recordings, or demos that help illustrate the changes.
 
 ## Checklist
-_Put an `x` in the boxes that apply. You can also fill these out after creating the PR. If unsure, ask!_
+Put an `x` in the boxes that apply. You can also fill these out after creating
+the PR.
 
 - [ ] I have read the [CONTRIBUTING](https://github.com/sravioli/wezterm/blob/main/.github/contributing.md) doc
 - [ ] My changes follow the project's style and conventions

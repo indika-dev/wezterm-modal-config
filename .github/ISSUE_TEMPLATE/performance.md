@@ -9,6 +9,7 @@ assignees: sravioli
 
 ## Performance issue description
 Describe the performance problem you're experiencing:
+
 - What's running slowly?
 - When does the issue occur?
 - How does it impact your workflow?
@@ -46,6 +47,7 @@ If possible, provide timing data:
 
 ## Profiling data
 If you have any profiling data, logs, or traces, paste them here:
+
 ```
 Profiling output or logs
 ```
@@ -54,4 +56,5 @@ Profiling output or logs
 What performance level would you consider acceptable?
 
 ## Additional context
-Any other relevant information (recent config changes, other tools you use, known workarounds, etc.)
+Add anything else that may matter, such as recent config changes, other tools,
+or known workarounds.
