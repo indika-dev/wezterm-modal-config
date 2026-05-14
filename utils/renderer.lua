@@ -7,11 +7,10 @@ local wt = require "wezterm" ---@class Wezterm
 local merge = warp.table.merge
 local str = warp.string ---@class Warp.String
 
--- Direct binding to the C function - bypasses the ANSI-strip regex in
--- str.width.  Safe here because all inputs at this layer are plain
--- text (icons, separators, padding, resolved node values).  For strings
--- that may contain ANSI codes (e.g. resolve_layout output), use
--- str.width instead.
+-- Direct binding to the Rust function. This bypasses the ANSI-stripping regex in
+-- str.width, which is safe here because this layer only measures plain text:
+-- icons, separators, padding, and resolved node values. Use str.width for
+-- strings that may contain ANSI codes, such as resolve_layout output.
 local raw_cw = wt.column_width
 
 local Opts = require("opts").statusbar ---@class Opts.StatusBar
@@ -491,7 +490,7 @@ local function build_cell(name, module, mode, avail_cols)
 end
 
 --- Walk the fallback chain and return the first mode that fits.
---- Resolves cell parts once and reuses across all mode trials.
+--- Resolve cell parts once, then reuse them for every mode trial.
 ---@param name       string
 ---@param module     Opts.StatusBar.Module
 ---@param avail_cols integer
@@ -519,7 +518,7 @@ local function build_cell_flexible(name, module, avail_cols)
     return "", 0
   end
 
-  -- Absolute last resort: force icon-only regardless of budget.
+  -- Last resort: force icon-only even when it exceeds the budget.
   local result, w = build_cell_from_parts(module, parts, "icon", nil)
   log:info("[%s] forced icon-only  width: %d  cell: %s", name, w, result)
   return result, math.max(w, 0)
@@ -666,8 +665,8 @@ local function render_module(name, module, components)
     formatted = resolve_layout(module.layout)
     consumed = str.width(formatted)
 
-    -- Respect the budget: if the resolved layout is too wide and the module
-    -- allows hiding, drop it rather than overflowing.
+    -- Respect the budget. If the resolved layout is too wide and the module
+    -- can be hidden, drop it instead of overflowing.
     if Opts.flexible then
       local avail = M.width.available - M.width.used
       if consumed > avail then

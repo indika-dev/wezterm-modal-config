@@ -198,12 +198,12 @@ end
 function M:_check(condition, message, level, group)
   level = level or 2
 
-  -- Lazy eval: skip if already failed
+  -- Lazy evaluation: skip later checks after the first failure.
   if self._config.lazy_eval and self._has_failed then
     return condition
   end
 
-  -- Update metrics
+  -- Track assertion metrics before handling failures.
   self:_update_metrics(condition, group)
 
   if not condition then
@@ -211,7 +211,7 @@ function M:_check(condition, message, level, group)
 
     local formatted = self:_format_message(message, group)
 
-    -- Create error object
+    -- Build the error payload passed to callbacks, loggers, and accumulators.
     local err = {
       message = formatted,
       level = level,
@@ -219,17 +219,17 @@ function M:_check(condition, message, level, group)
       timestamp = os.time(),
     }
 
-    -- Custom formatter
+    -- Apply a user-provided formatter before emitting the error.
     if self._config.format_error then
       err.message = self._config.format_error.format(err, self._config)
     end
 
-    -- On error callback
+    -- Let callers observe the formatted error.
     if self._config.on_error then
       self._config.on_error(err)
     end
 
-    -- Logger integration
+    -- Forward the error to the configured logger.
     if self._config.logger and self._config.logger.error then
       self._config.logger.error(err.message)
     end
