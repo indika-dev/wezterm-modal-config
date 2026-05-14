@@ -14,7 +14,8 @@ interactive pickers, and an override system for local changes.
 >
 > - [WezTerm **nightly**](https://wezfurlong.org/wezterm/installation.html)
 > - [Fira Code NerdFont](https://www.nerdfonts.com)
-> - [Monaspace Radon](https://github.com/githubnext/monaspace/releases/latest)
+> - [Monaspace Radon](https://github.com/githubnext/monaspace/releases/latest),
+>   [Monaspace Argon](https://github.com/githubnext/monaspace/releases/latest),
 >   and [Monaspace Krypton](https://github.com/githubnext/monaspace/releases/latest)
 
 1. **Backup any old config:**
@@ -69,7 +70,10 @@ stay visible in narrower windows.
 
 ![Help mode](./imgs/showcase-mode-help.png)
 
-Six modal tables provide inline key hints. The leader key is `<C-Space>`.
+Six modal tables provide inline key hints through
+[chord.wz](https://github.com/sravioli/chord.wz). The leader key is
+`<C-Space>`. Use `<leader><Space>` for the command picker and `<leader>?` for
+the searchable key help overlay.
 
 | Leader combo | Mode | Description |
 |-------------|------|-------------|
@@ -78,7 +82,7 @@ Six modal tables provide inline key hints. The leader key is `<C-Space>`.
 | `<leader>f` | Font | Adjust font size interactively |
 | `<leader>c` | Copy | Vim-style text selection |
 | `<leader>s` | Search | Pattern matching and navigation |
-| `<leader>p` | Lantern | Pickers for theme, font, GPU, window, cursor, and tab styling |
+| `<leader>p` | [Lantern](https://github.com/sravioli/lantern.wz) | Pickers for theme, font, GPU, window, cursor, and tab styling |
 
 Prompts are responsive - they paginate when the terminal is narrow.
 
@@ -96,7 +100,8 @@ Prompts are responsive - they paginate when the terminal is narrow.
 
 ### Interactive pickers
 
-Built-in pickers wrap WezTerm's `InputSelector` through `lantern.wz`:
+Built-in pickers wrap WezTerm's `InputSelector` through
+[lantern.wz](https://github.com/sravioli/lantern.wz):
 
 1. **Colorscheme** - nearly 30 themes with inline palette preview
 2. **Font** - 19 NerdFont families
@@ -122,7 +127,8 @@ Built-in pickers wrap WezTerm's `InputSelector` through `lantern.wz`:
 
 ### Vim-style keybindings
 
-More than 50 keybindings use Vim notation and are translated to WezTerm's
+More than 50 keybindings use Vim notation and
+[chord.wz](https://github.com/sravioli/chord.wz) translates them to WezTerm's
 native format.
 Global bindings live in `mappings/default.lua`; modal tables live in
 `mappings/modes.lua`.
