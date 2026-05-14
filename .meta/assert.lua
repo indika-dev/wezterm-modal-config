@@ -1,12 +1,12 @@
 ---@meta utils.assert.core
 ---
----Provide flexible assertion utilities with configurable error handling and grouping.
+---Assertion helpers with configurable error handling and grouping.
 ---
----Support multiple assertion strategies including immediate failure, error accumulation,
----custom handlers, and method chaining. Organize assertions into logical groups (string,
----number, table, type, nil, comparison) for clarity and maintainability.
+---Supports immediate failure, error accumulation, custom handlers, and method
+---chaining. Assertions are grouped by kind: string, number, table, type, nil,
+---and comparison.
 ---
----### Example Usage
+---### Example usage
 ---~~~lua
 ---local Assert = require "utils.assert"
 ---
@@ -68,7 +68,7 @@ error "cannot require a meta file!"
 ---@field public format Assert.MessageFormatter Custom error message formatter.
 
 ---@class Assert.Config
----Configuration options for assertion behavior and error handling.
+---Assertion behavior and error handling options.
 ---
 ---@field public handler?            Assert.Handler        Custom failure handler (default: error function).
 ---@field public accumulate?         boolean               Accumulate errors instead of immediate failure (default: false).
@@ -98,7 +98,7 @@ error "cannot require a meta file!"
 ---@field private _group    string
 
 ---@class Assert.Value
----Value holder enabling chained assertions without repeating the value.
+---Value wrapper used for chained assertions without repeating the input.
 ---
 ---@field public value  any               Value being validated.
 ---@field public parent Assert            Parent assertion instance.
@@ -159,7 +159,7 @@ error "cannot require a meta file!"
 ---@field private _group      string
 
 ---@class Assert
----Assertion utility with grouped assertion methods and configurable error handling.
+---Assertion utility with grouped checks and configurable error handling.
 ---
 ---@field public  cmp         Assert.Comparison     Comparison assertions (equal, truthy, etc.).
 ---@field public  nul         Assert.Nil            Nil check assertions.

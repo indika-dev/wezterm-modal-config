@@ -4,15 +4,15 @@
 --- Tracks three categories of column consumption so that every module can
 --- query how much space remains without duplicating measurement logic:
 ---
----   1. **Tab cells** - per-tab rendered widths published by `format-tab-title`
+---   1. Tab cells: per-tab rendered widths published by `format-tab-title`
 ---      via `record()` / `set_count()`.
----   2. **Left status** - columns consumed by the left-status render pass,
+---   2. Left status: columns consumed by the left-status render pass,
 ---      published by `Renderer.commit_left()` via `set_left_used()`.
----   3. **New-tab button** - 0 or 8 columns reserved when the button is shown,
+---   3. New-tab button: 0 or 8 columns reserved when the button is shown,
 ---      published by `Renderer.commit_left()` via `set_new_tab_button()`.
 ---
---- The total screen width (`_total_screen_width`) is set **once per render
---- cycle** by `Renderer.init()` (the first, un-constrained call).  It is never
+--- The total screen width (`_total_screen_width`) is set once per render
+--- cycle by `Renderer.init()` (the first, unconstrained call). It is never
 --- overwritten by subsequent renderer operations, guaranteeing that
 --- `right_available()` always computes from the true terminal width.
 ---
@@ -35,7 +35,7 @@ local M = {
   -- ── Layout-wide metrics ──────────────────────────────────────────────────
 
   --- True terminal width in columns.
-  --- Set **once per cycle** by `Renderer.init()` (without `available_cols`).
+  --- Set once per cycle by `Renderer.init()` (without `available_cols`).
   _total_screen_width = 0, ---@type integer
 
   --- Columns consumed by the left-status render pass.
@@ -58,7 +58,7 @@ local M = {
 ---when the caller already knows the width from its own layout math.
 ---
 ---@param index           integer         zero-based tab index
----@param width_or_rendered integer|string  column count **or** raw `cell:format()` output
+---@param width_or_rendered integer|string  column count or raw `cell:format()` output
 function M.record(index, width_or_rendered)
   local new_w
   if type(width_or_rendered) == "number" then
@@ -90,7 +90,7 @@ end
 
 ---Total columns consumed by all tab cells in the last render pass.  O(1).
 ---
----On the **first frame**, before `format-tab-title` has published real widths,
+---On the first frame, before `format-tab-title` has published real widths,
 ---returns a conservative upper-bound estimate (`_count * _tab_max_width`) so
 ---the right status never overflows.  Once real data arrives the cached running
 ---total is returned directly.
@@ -103,14 +103,14 @@ function M.total_width()
 end
 
 ---Set the true terminal width for the current render cycle.
----Called **once** by `Renderer.init()` (the first, un-constrained call).
+---Called once by `Renderer.init()` (the first, unconstrained call).
 ---@param cols integer
 function M.set_screen_width(cols)
   M._total_screen_width = cols
 end
 
 ---Set the column count consumed by the left-status render pass.
----Called by `Renderer.commit_left()` **before** the right-status render.
+---Called by `Renderer.commit_left()` before the right-status render.
 ---@param cols integer
 function M.set_left_used(cols)
   M._left_used = cols
@@ -124,7 +124,7 @@ function M.set_new_tab_button(cols)
 end
 
 ---Set the per-tab max width from config (used for cold-start estimation).
----Called by `Renderer.init()`.  Skips the write when unchanged.
+---Called by `Renderer.init()`. Skips the write when unchanged.
 ---@param cols integer
 function M.set_tab_max_width(cols)
   if cols == M._tab_max_width then

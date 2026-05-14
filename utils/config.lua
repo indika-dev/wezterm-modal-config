@@ -16,7 +16,7 @@ function M:reset()
   return self
 end
 
----Add a module to the load queue
+---Add a module to the load queue.
 ---@param name_or_module string|table|fun(): table
 ---@return table self
 function M:add(name_or_module)
@@ -42,11 +42,11 @@ function M:add(name_or_module)
   return self
 end
 
----Merge modules and return the final config
+---Merge queued modules and return the final config.
 function M:init()
   local final_config = {}
 
-  -- shallow merge
+  -- Shallow merge the base modules before applying user overrides.
   for i = 1, #self.modules do
     local mod = self.modules[i]
     for k, v in pairs(mod) do

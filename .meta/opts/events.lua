@@ -10,6 +10,6 @@ error "cannot require a meta file!"
 ---@field public update_status?           Opts.Events.Base
 ---
 ---@class Opts.Events.Base
----@field public enabled? boolean Whether the event it's enabled or not
+---@field public enabled? boolean Whether the event is enabled.
 
 -- luacheck: pop

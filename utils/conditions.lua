@@ -49,17 +49,17 @@ M.any = function(...)
   end
 end
 
----Invert result of a condition via logical NOT.
+---Invert a condition result.
 ---
 ---@param condition fun(window: table, pane: table): boolean Condition to invert.
----@return fun(window: table, pane: table): boolean logic_gate Function returning inverse of input condition.
+---@return fun(window: table, pane: table): boolean logic_gate Function returning the inverse result.
 M.not_ = function(condition)
   return function(window, pane)
     return not condition(window, pane)
   end
 end
 
----Check if any key table is currently active.
+---Check whether any key table is active.
 ---
 ---@param window table WezTerm window object.
 ---@param _ any Unused pane parameter.
@@ -68,7 +68,7 @@ M.mode_active = function(window, _)
   return window:active_key_table() ~= nil
 end
 
----Check if no key table is currently active.
+---Check whether no key table is active.
 ---
 ---@param window table WezTerm window object.
 ---@param _ any Unused pane parameter.
@@ -77,7 +77,7 @@ M.mode_inactive = function(window, _)
   return window:active_key_table() == nil
 end
 
----Check if workspace name is not empty.
+---Check whether the active workspace name is not empty.
 ---
 ---@param window table WezTerm window object.
 ---@param _ any Unused pane parameter.
@@ -86,7 +86,7 @@ M.has_workspace = function(window, _)
   return window:active_workspace() ~= ""
 end
 
----Check if workspace name is empty.
+---Check whether the active workspace name is empty.
 ---
 ---@param window table WezTerm window object.
 ---@param _ any Unused pane parameter.
@@ -95,7 +95,7 @@ M.is_default_workspace = function(window, _)
   return window:active_workspace() == ""
 end
 
----Check if leader key is currently active.
+---Check whether the leader key is active.
 ---
 ---@param window table WezTerm window object.
 ---@param _ any Unused pane parameter.
@@ -104,7 +104,7 @@ M.leader_active = function(window, _)
   return window:leader_is_active() == true
 end
 
----Check if leader key is currently inactive.
+---Check whether the leader key is inactive.
 ---
 ---@param window table WezTerm window object.
 ---@param _ any Unused pane parameter.
@@ -113,7 +113,7 @@ M.leader_inactive = function(window, _)
   return window:leader_is_active() == false
 end
 
----Evaluate condition if it is a function, otherwise return value directly.
+---Evaluate a function condition, or return a static value as-is.
 ---
 ---@param cond any Function to evaluate or static boolean value.
 ---@param window table WezTerm window object.

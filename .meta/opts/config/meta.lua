@@ -7,14 +7,14 @@ error "cannot require a meta file!"
 ---@field public color? Opts.Config.Color
 ---
 ---
----Color configuration options
+---Color configuration options.
 ---@class Opts.Config.Color
----@field public opacity?         number                           Window background opacity level
----@field public default_schemes? Opts.Config.Color.DefaultSchemes Default colorchemes names.
+---@field public opacity?         number                           Window background opacity.
+---@field public default_schemes? Opts.Config.Color.DefaultSchemes Default colorscheme names.
 ---
 ---
 ---@class Opts.Config.Color.DefaultSchemes
----@field public dark?  string Colorscheme name for dark appearance
----@field public light? string Colorscheme name for light appearance
+---@field public dark?  string Colorscheme name for dark appearance.
+---@field public light? string Colorscheme name for light appearance.
 
 -- luacheck: pop

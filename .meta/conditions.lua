@@ -5,7 +5,7 @@ error "cannot require a meta file!"
 
 ---Boolean condition functions for status bar visibility and key-table state.
 ---
----Provide composable logical combinators (`all`, `any`, `not_`) and concrete
+---Provides composable logical combinators (`all`, `any`, `not_`) and concrete
 ---predicates for leader key state, active mode (key table), and workspace
 ---presence.
 ---
@@ -19,8 +19,8 @@ error "cannot require a meta file!"
 ---@field public never                Conditions.Predicate  Always returns false.
 ---@field public all                  Conditions.Combinator Combine conditions with logical AND.
 ---@field public any                  Conditions.Combinator Combine conditions with logical OR.
----@field public not_                 Conditions.Negator    Invert a condition via logical NOT.
----@field public mode_active          Conditions.Predicate  True if a key table is currently active.
+---@field public not_                 Conditions.Negator    Invert a condition.
+---@field public mode_active          Conditions.Predicate  True if a key table is active.
 ---@field public mode_inactive        Conditions.Predicate  True if no key table is active.
 ---@field public has_workspace        Conditions.Predicate  True if workspace name is non-empty.
 ---@field public is_default_workspace Conditions.Predicate  True if workspace name is empty.

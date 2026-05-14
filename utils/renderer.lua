@@ -25,8 +25,8 @@ local M = {
   width = { used = 0, available = 0 },
 }
 
--- Reusable Ribbon cell for assemble_cell (avoids Ribbon allocation
--- per cell render).  Cleared via :clear() before each use.
+-- Reusable Ribbon cell for assemble_cell. It avoids one Ribbon allocation per
+-- cell render and is cleared with :clear() before each use.
 local _cell = ribbon:new "Cell"
 
 -- Reusable context table for resolve_layout (avoids per-call allocation).
@@ -85,7 +85,7 @@ function M.init(config, window, pane, theme)
     math.floor((win_width * pane_dimensions.cols) / pane_dimensions.pixel_width)
   M.width.used = 0
 
-  -- Publish total screen width **once** per cycle so that
+  -- Publish total screen width once per cycle so that
   -- `budget.right_available()` always computes from the true terminal width.
   budget.set_screen_width(M.width.available)
 
@@ -105,8 +105,8 @@ end
 
 ---Transition from the left-status render phase to the right-status phase.
 ---
----This is the **single synchronisation point** between the two halves of the
----status bar.  It performs three things atomically:
+---This is the single synchronization point between the two halves of the
+---status bar. It performs four updates atomically:
 ---
 ---  1. Publishes `_left_used` so `budget.right_available()` is accurate.
 ---  2. Publishes `_new_tab_button` (derived from `config`).
