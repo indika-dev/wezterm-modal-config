@@ -1,25 +1,30 @@
-## Proposed changes
+Thanks for contributing to this WezTerm configuration.
 
-<!-- Describe the big picture of your changes here.  If it fixes a bug or
-resolves a feature request, be sure to link to that issue. -->
+This default template only points to the focused pull request templates. Please
+use the one that best matches your change:
 
-## Types of changes
+- Configuration change:
+  - Template file:
+    https://github.com/sravioli/wezterm/blob/main/.github/PULL_REQUEST_TEMPLATE/config_change.md
+  - Query parameter: `?template=config_change.md`
+- Plugin migration:
+  - Template file:
+    https://github.com/sravioli/wezterm/blob/main/.github/PULL_REQUEST_TEMPLATE/plugin_migration.md
+  - Query parameter: `?template=plugin_migration.md`
+- Bug fix:
+  - Template file:
+    https://github.com/sravioli/wezterm/blob/main/.github/PULL_REQUEST_TEMPLATE/bug_fix.md
+  - Query parameter: `?template=bug_fix.md`
+- Documentation:
+  - Template file:
+    https://github.com/sravioli/wezterm/blob/main/.github/PULL_REQUEST_TEMPLATE/documentation.md
+  - Query parameter: `?template=documentation.md`
 
-What types of changes does your code introduce to this config?
-_Put an `x` in the boxes that apply_
+To use one, reopen this pull request with the matching `?template=...` value in
+the URL and replace this placeholder body with the selected template.
 
-- [ ] Bugfix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] Documentation Update (if none of the other choices apply)
+Example:
 
-## Checklist
-
-_Put an `x` in the boxes that apply. You can also fill these out after creating the PR. If you're unsure about any of them, don't hesitate to ask._
-
-- [ ] I have read the [CONTRIBUTING](https://github.com/sravioli/wezterm/blob/main/.github/contributing.md) doc
-- [ ] I have added the necessary documentation (if appropriate)
-
-## Further comments
-
-If this is a relatively large or complex change, kick off the discussion by explaining why you chose the solution you did and what alternatives you considered, etc...
+```text
+https://github.com/sravioli/wezterm/compare/<branch-name>?template=config_change.md
+```

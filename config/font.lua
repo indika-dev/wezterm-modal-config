@@ -85,6 +85,21 @@ Config.font = wt.font_with_fallback {
   { family = "LegacyComputing" },
 }
 
+local monaspace_features = {
+  "calt", -- (contextual alternates) activates texture healing.
+  "liga", -- activates ligatures
+  "ss01",
+  "ss02",
+  "ss03",
+  "ss04",
+  "ss05",
+  "ss06",
+  "ss07",
+  "ss08",
+  "ss09",
+  "ss10",
+}
+
 Config.font_rules = {
   {
     intensity = "Normal",
