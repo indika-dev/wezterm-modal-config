@@ -2,6 +2,7 @@
 ---@field class Utils.Class
 ---@field fn    Utils.Fn
 ---@field gpu   GpuAdapters
+---@field suntimes SunTimes
 local M = {}
 
 local mod = ...

@@ -61,24 +61,8 @@ end -- }}}
 ---@param Config table UI settings.
 ---@param pane wt.Pane Wezterm's pane object
 ---@param window wt.Window Wezterm's window object
----@param pane   wt.Pane   Wezterm's pane object
-wt.on("update-status", function(window, pane)
-  local Config, Overrides = window:effective_config(), window:get_config_overrides() or {}
-  local theme = Config.color_schemes[Overrides.color_scheme or Config.color_scheme]
-  theme = Config.color_schemes["Kanagawa Dragon"]
-
-  --~ {{{2: Valid modes
-
-  local modes = {
-    search_mode = { i = "󰍉", txt = "SEARCH", bg = theme.brights[4], pad = 5 },
-    window_mode = { i = "󱂬", txt = "WINDOW", bg = theme.ansi[6], pad = 4 },
-    copy_mode = { i = "󰆏", txt = "COPY", bg = theme.brights[3], pad = 5 },
-    font_mode = { i = "󰛖", txt = "FONT", bg = theme.ansi[7], pad = 4 },
-    help_mode = { i = "󰞋", txt = "NORMAL", bg = theme.ansi[5], pad = 5 },
-    pick_mode = { i = "󰢷", txt = "PICK", bg = theme.ansi[2], pad = 5 },
-  } --~ }}}
-
-  local bg, fg = theme.background, theme.ansi[5]
+---@return UpdateStatusEvent.Width width width-related properties.
+e.__get_width = function(Config, pane, window)
   local pane_dimensions = pane:get_dimensions()
   local win_width = window:get_dimensions().pixel_width
 
@@ -214,8 +198,53 @@ e.set_modal_prompts = function(window)
       rsb:append(prompt_bg, txt_fg, ">")
       rsb:append(prompt_bg, txt_fg, str.pad(desc), { "Normal", "Italic" })
 
-  fg = color_parse(fg)
-  local palette = { fg:darken(0.15), fg, fg:lighten(0.15), fg:lighten(0.25) }
+      local next_map, _, next_desc = tunpack(key_tbl[idx + 1] or { "", "", "" })
+      local next_prompt_len = str.width(next_map .. str.pad(next_desc))
+      if idx < #key_tbl and next_prompt_len < e.width.usable then
+        rsb:append(prompt_bg, e.theme.brights[1], str.padr(msep, 1), { "NoItalic" })
+      end
+    end
+  end
+
+  window:set_right_status(rsb:format())
+end -- }}}
+
+-- {{{1 e.update_width(Config, window, pane)
+
+---Updates the width calculations for the window and pane, factoring in various UI elements.
+---The function computes the width of tabs, mode, new button, and workspace, then returns
+---the remaining usable width.
+---
+---@param Config table The configuration settings used for formatting the tab titles.
+---@param window wt.Window Wezterm's window object
+---@param pane wt.Pane Wezterm's pane object
+---@return number usable_width remaining usable width
+e.update_width = function(Config, window, pane)
+  for _ = 1, #window:mux_window():tabs() do
+    local tab_title = pane:get_title()
+    e.width.tabs = e.width.tabs
+      + str.width(str.format_tab_title(pane, tab_title, Config, 25))
+  end
+
+  return e.width.usable - (e.width.tabs + e.width.mode + e.width.new_button + e.width.ws)
+end -- }}}
+
+-- {{{1 e.set_right_status(Config, window, pane)
+
+---Updates and sets the right status bar for the given window.
+---The function constructs the right status bar by gathering information on battery
+---status, time, current working directory (cwd), and hostname, then formats and appends
+---these pieces of information as cells to the status bar.
+---The status bar is then updated in the window.
+---
+---@param Config table configuration settings
+---@param window wt.Window Wezterm's window object
+---@param pane wt.Pane Wezterm's pane object
+e.set_right_status = function(Config, window, pane)
+  local rsb = sb:new "RightStatusBar"
+
+  e.fg = color_parse(tostring(e.fg))
+  local palette = { e.fg:darken(0.15), e.fg, e.fg:lighten(0.15), e.fg:lighten(0.25) }
   local cwd, hostname = fs.get_cwd_hostname(pane, true)
 
   --~ {{{2: battery cells
@@ -273,7 +302,7 @@ e.set_modal_prompts = function(window)
     local rsep = sep.sb.right
 
     rsb:append(cell_fg, cell_bg, rsep)
-    -- rsb:append(cell_bg, theme.tab_bar.background, str.pad(cells[i]), { "Bold" })
+    rsb:append(cell_bg, e.theme.tab_bar.background, str.pad(cells[i]), { "Bold" })
   end
 
   window:set_right_status(rsb:format())

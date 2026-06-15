@@ -9,36 +9,40 @@ local M = {}
 local color = require("utils").fn.color
 
 M.scheme = {
-  background = "#1F1F28",
-  foreground = "#DCD7BA",
-  cursor_bg = "#C8C093",
-  cursor_fg = "#16161D",
-  cursor_border = "#C8C093",
-  selection_fg = "#DCD7BA",
-  selection_bg = "#223249",
-  scrollbar_thumb = "#223249",
-  split = "#54546D",
+  foreground = "#dcd7ba",
+  background = "#1f1f28",
+
+  cursor_bg = "#c8c093",
+  cursor_fg = "#c8c093",
+  cursor_border = "#c8c093",
+
+  selection_fg = "#c8c093",
+  selection_bg = "#2d4f67",
+
+  scrollbar_thumb = "#16161d",
+  split = "#16161d",
+
   ansi = {
-    "#16161D",
-    "#C34043",
-    "#76946A",
-    "#C0A36E",
-    "#7E9CD8",
-    "#957FB8",
-    "#6A9589",
-    "#C8C093",
+    "#090618",
+    "#c34043",
+    "#76946a",
+    "#c0a36e",
+    "#7e9cd8",
+    "#957fb8",
+    "#6a9589",
+    "#c8c093",
   },
   brights = {
     "#727169",
-    "#E82424",
-    "#98BB6C",
-    "#E6C384",
-    "#7FB4CA",
-    "#938AA9",
-    "#7AA89F",
-    "#DCD7BA",
+    "#e82424",
+    "#98bb6c",
+    "#e6c384",
+    "#7fb4ca",
+    "#938aa9",
+    "#7aa89f",
+    "#dcd7ba",
   },
-  indexed = { [16] = "#FFA066", [17] = "#FF5D62" },
+  indexed = { [16] = "#ffa066", [17] = "#ff5d62" },
   compose_cursor = "#938AA9",
   visual_bell = "#16161D",
   copy_mode_active_highlight_bg = { Color = "#223249" },
@@ -61,7 +65,7 @@ M.scheme = {
 }
 
 function M.get()
-  return { id = "kanagawa-wave", label = "Kanagawa Wave" }
+  return { id = "kanagawa", label = "Kanagawa" }
 end
 
 function M.activate(Config, callback_opts)
