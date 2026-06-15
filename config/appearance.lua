@@ -8,20 +8,22 @@ local G = require("wezterm").GLOBAL
 local Config = {}
 
 local colorscheme = function()
-  if os.getenv "USER" == "stefan" then
+  local result = ""
+  if os.getenv "USER" == "stefan.maassen" then
     local _nowepochtime = os.time(os.date "!*t")
     local epochTimesTable = SunTimes.GetSunTimes(51.09102, 6.5827)
     if
       _nowepochtime >= epochTimesTable.sunrise
       and _nowepochtime < epochTimesTable.sunset
     then
-      return "kanagawa-lotus"
+      result = "kanagawa-lotus"
     else
-      return "kanagawa-dragon"
+      result = "kanagawa-dragon"
     end
   else
-    return "kanagawa-wave"
+    result = "kanagawa-wave"
   end
+  return result
 end
 
 Config.color_schemes = color.get_schemes()

@@ -61,29 +61,8 @@ end -- }}}
 ---@param Config table UI settings.
 ---@param pane wt.Pane Wezterm's pane object
 ---@param window wt.Window Wezterm's window object
-<<<<<<< HEAD
----@param pane   wt.Pane   Wezterm's pane object
-wt.on("update-status", function(window, pane)
-  local Config, Overrides = window:effective_config(), window:get_config_overrides() or {}
-  local theme = Config.color_schemes[Overrides.color_scheme or Config.color_scheme]
-  theme = Config.color_schemes["Kanagawa Dragon"]
-
-  --~ {{{2: Valid modes
-
-  local modes = {
-    search_mode = { i = "󰍉", txt = "SEARCH", bg = theme.brights[4], pad = 5 },
-    window_mode = { i = "󱂬", txt = "WINDOW", bg = theme.ansi[6], pad = 4 },
-    copy_mode = { i = "󰆏", txt = "COPY", bg = theme.brights[3], pad = 5 },
-    font_mode = { i = "󰛖", txt = "FONT", bg = theme.ansi[7], pad = 4 },
-    help_mode = { i = "󰞋", txt = "NORMAL", bg = theme.ansi[5], pad = 5 },
-    pick_mode = { i = "󰢷", txt = "PICK", bg = theme.ansi[2], pad = 5 },
-  } --~ }}}
-
-  local bg, fg = theme.background, theme.ansi[5]
-=======
 ---@return UpdateStatusEvent.Width width width-related properties.
 e.__get_width = function(Config, pane, window)
->>>>>>> 3a42f56 (feat(update-status): reduce complexity, add comments)
   local pane_dimensions = pane:get_dimensions()
   local win_width = window:get_dimensions().pixel_width
 
@@ -219,10 +198,6 @@ e.set_modal_prompts = function(window)
       rsb:append(prompt_bg, txt_fg, ">")
       rsb:append(prompt_bg, txt_fg, str.pad(desc), { "Normal", "Italic" })
 
-<<<<<<< HEAD
-  fg = color_parse(fg)
-  local palette = { fg:darken(0.15), fg, fg:lighten(0.15), fg:lighten(0.25) }
-=======
       local next_map, _, next_desc = tunpack(key_tbl[idx + 1] or { "", "", "" })
       local next_prompt_len = str.width(next_map .. str.pad(next_desc))
       if idx < #key_tbl and next_prompt_len < e.width.usable then
@@ -268,9 +243,8 @@ end -- }}}
 e.set_right_status = function(Config, window, pane)
   local rsb = sb:new "RightStatusBar"
 
-  e.fg = color_parse(e.fg)
+  e.fg = color_parse(tostring(e.fg))
   local palette = { e.fg:darken(0.15), e.fg, e.fg:lighten(0.15), e.fg:lighten(0.25) }
->>>>>>> 3a42f56 (feat(update-status): reduce complexity, add comments)
   local cwd, hostname = fs.get_cwd_hostname(pane, true)
 
   --~ {{{2: battery cells
@@ -328,11 +302,7 @@ e.set_right_status = function(Config, window, pane)
     local rsep = sep.sb.right
 
     rsb:append(cell_fg, cell_bg, rsep)
-<<<<<<< HEAD
-    -- rsb:append(cell_bg, theme.tab_bar.background, str.pad(cells[i]), { "Bold" })
-=======
     rsb:append(cell_bg, e.theme.tab_bar.background, str.pad(cells[i]), { "Bold" })
->>>>>>> 3a42f56 (feat(update-status): reduce complexity, add comments)
   end
 
   window:set_right_status(rsb:format())
