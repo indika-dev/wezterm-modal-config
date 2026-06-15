@@ -1,17 +1,17 @@
-local Icons = require "utils.class.icon"
-local fs = require("utils.fn").fs
+local warp = require "plugs.warp" ---@class Warp.Api
+local fs = warp.filesystem ---@class Warp.FileSystem
+
+local sigil = require "plugs.sigil" ---@class Sigil.Api
 
 local Config = {}
 
-Config.leader = { key = "Space", mods = "CTRL|ALT", timeout_milliseconds = 1000 }
-
-if fs.platform().is_win then
+if fs.is_win then
   Config.default_prog =
     { "pwsh", "-NoLogo", "-ExecutionPolicy", "RemoteSigned", "-NoProfileLoadTime" }
 
   Config.launch_menu = {
     {
-      label = Icons.Progs["pwsh.exe"] .. " PowerShell V7",
+      label = sigil.icon "pwsh.exe" .. " PowerShell V7",
       args = {
         "pwsh",
         "-NoLogo",
@@ -22,12 +22,12 @@ if fs.platform().is_win then
       cwd = "~",
     },
     {
-      label = Icons.Progs["wsl.exe"] .. " Fedora 44",
-      args = { "--cd ~" },
+      label = sigil.icon "pwsh.exe" .. " PowerShell V5",
+      args = { "powershell" },
       cwd = "~",
     },
-    -- { label = "Command Prompt", args = { "cmd.exe" }, cwd = "~" },
-    -- { label = Icons.Progs["git"] .. " Git bash", args = { "sh", "-l" }, cwd = "~" },
+    { label = "Command Prompt", args = { "cmd.exe" }, cwd = "~" },
+    { label = sigil.icon "git" .. " Git bash", args = { "sh", "-l" }, cwd = "~" },
   }
 
   -- ref: https://wezfurlong.org/wezterm/config/lua/WslDomain.html
@@ -35,26 +35,25 @@ if fs.platform().is_win then
     {
       name = "WSL:Ubuntu",
       distribution = "Ubuntu",
-      username = "stefan.maassen",
+      username = "sravioli",
       default_cwd = "~",
+      default_prog = { "bash", "-i", "-l" },
     },
     {
-      name = "WSL:FedoraLinux-44",
-      distribution = "FedoraLinux-44",
-      username = "stefan.maassen",
-      default_cwd = "~",
+      name = "WSL:Alpine",
+      distribution = "Alpine",
+      username = "sravioli",
+      default_cwd = "/home/sravioli",
     },
   }
 end
 
-Config.default_cwd = fs.home()
+Config.default_cwd = fs.home
 
 -- ref: https://wezfurlong.org/wezterm/config/lua/SshDomain.html
 Config.ssh_domains = {}
 
 -- ref: https://wezfurlong.org/wezterm/multiplexing.html#unix-domains
 Config.unix_domains = {}
-
-Config.default_domain = "WSL:FedoraLinux-44"
 
 return Config

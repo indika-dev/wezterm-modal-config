@@ -1,18 +1,17 @@
+local wt = require "wezterm" ---@class Wezterm
+
 local Config = {}
 
-if os.getenv "USER" == "stefan" then
-  Config.front_end = "WebGpu"
-  Config.webgpu_preferred_adapter = require("utils.gpu"):pick_best()
-else
-  Config.front_end = "OpenGL"
-end
-Config.max_fps = 60
+Config.front_end = "WebGpu"
 Config.webgpu_force_fallback_adapter = false
----switch to low power mode when battery is low
----@diagnostic disable-next-line: undefined-field
-local battery = require("wezterm").battery_info()[1]
-Config.webgpu_power_preference = (battery and battery.state_of_charge < 0.35)
-    and "LowPower"
-  or "HighPerformance"
+
+---Switch to low power mode when battery is low.
+---Deferred to a function so `battery_info()` is not called at require time.
+Config.webgpu_power_preference = (function()
+  local battery = wt.battery_info()[1]
+  return (battery and battery.state_of_charge < 0.35) and "LowPower" or "HighPerformance"
+end)()
+
+Config.webgpu_preferred_adapter = require("plugs.lantern").gpu().best()
 
 return Config

@@ -1,11 +1,17 @@
 ---@module "events.augment-window-title"
----@author sravioli
----@license GNU-GPLv3
 
-local wt = require "wezterm"
-local fs = require("utils.fn").fs
+local warp = require "plugs.warp" ---@class Warp.Api
+local fs = warp.filesystem ---@class Warp.FileSystem
+local wt = require "wezterm" ---@class Wezterm
 
-wt.on("format-window-title", function(tab, pane, tabs, _, _)
+---@param tab TabInformation
+---@param pane PaneInformation
+---@param tabs MuxTabObj[]
+---@param _panes Pane[]
+---@param _config Config
+---@return string
+---@diagnostic disable-next-line: unused-local
+wt.on("format-window-title", function(tab, pane, tabs, _panes, _config)
   local zoomed = ""
   if tab.active_pane.is_zoomed then
     zoomed = "[Z] "
@@ -21,10 +27,11 @@ wt.on("format-window-title", function(tab, pane, tabs, _, _)
 
   local proc = pane.foreground_process_name
   if proc:find "nvim" then
-    proc = proc:sub(proc:find "nvim")
+    proc = proc:sub(proc:find "nvim" or 0)
   end
   if proc == "nvim" or title == "cmd" then
-    local cwd, _ = fs.basename(pane.current_working_dir.file_path)
+    local cwd_uri = pane.current_working_dir
+    local cwd = cwd_uri and fs.basename(cwd_uri.file_path) or ""
     title = ("Neovim (dir: %s)"):format(cwd)
   end
 

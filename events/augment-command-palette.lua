@@ -1,17 +1,22 @@
 ---@module "events.augment-command-palette"
----@author sravioli
----@license GNU-GPLv3
 
----@diagnostic disable: undefined-field
-local wt = require "wezterm"
+local wt = require "wezterm" ---@class Wezterm
 local act = wt.action
+local chord = require "plugs.chord" ---@class Chord
+local lantern = require "plugs.lantern" ---@class Lantern
 
-wt.on("augment-command-palette", function(_, _)
-  return {
+local function append_entries(entries, extra)
+  for _, entry in ipairs(extra or {}) do
+    entries[#entries + 1] = entry
+  end
+  return entries
+end
+
+wt.on("augment-command-palette", function(_window, _pane)
+  local entries = {
     {
       brief = "Rename tab",
       icon = "md_rename_box",
-
       action = act.PromptInputLine {
         description = "Enter new name for tab",
         action = wt.action_callback(function(inner_window, _, line)
@@ -22,24 +27,68 @@ wt.on("augment-command-palette", function(_, _)
       },
     },
     {
-      brief = "Colorscheme picker",
+      brief = "Lantern: colorscheme",
       icon = "md_palette",
-      action = require("picker.colorscheme"):pick(),
+      action = lantern.light.colorscheme(),
     },
     {
-      brief = "Font picker",
+      brief = "Lantern: font",
       icon = "md_format_font",
-      action = require("picker.font"):pick(),
+      action = lantern.light.font(),
     },
     {
-      brief = "Font size picker",
+      brief = "Lantern: font size",
       icon = "md_format_font_size_decrease",
-      action = require("picker.font-size"):pick(),
+      action = lantern.light.font_size(),
     },
     {
-      brief = "Font leading picker",
+      brief = "Lantern: line height",
       icon = "fa_text_height",
-      action = require("picker.font-leading"):pick(),
+      action = lantern.light.font_leading(),
+    },
+    {
+      brief = "Lantern: GPU",
+      icon = "md_expansion_card",
+      action = lantern.light.gpu(),
+    },
+    {
+      brief = "Lantern: window opacity",
+      icon = "md_opacity",
+      action = lantern.light.window_opacity(),
+    },
+    {
+      brief = "Lantern: window padding",
+      icon = "md_dock_window",
+      action = lantern.light.window_padding(),
+    },
+    {
+      brief = "Lantern: cursor style",
+      icon = "md_cursor_text",
+      action = lantern.light.cursor_style(),
+    },
+    {
+      brief = "Lantern: inactive pane opacity",
+      icon = "md_blur_on",
+      action = lantern.light.inactive_pane_opacity(),
+    },
+    {
+      brief = "Lantern: font ligatures",
+      icon = "md_format_text",
+      action = lantern.light.font_ligatures(),
+    },
+    {
+      brief = "Lantern: tab bar style",
+      icon = "md_tab",
+      action = lantern.light.tab_bar_style(),
+    },
+    {
+      brief = "Invalidate cache",
+      icon = "md_cached",
+      action = wt.action_callback(function(_, _, _)
+        require("plugs.memo").cache.clear()
+      end),
     },
   }
+
+  return append_entries(entries, chord.palette())
 end)

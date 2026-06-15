@@ -1,8 +1,21 @@
-local Config = require("utils.class.config"):new()
+require "events"
 
-require "events.update-status"
-require "events.format-tab-title"
-require "events.new-tab-button-click"
-require "events.augment-command-palette"
+local chord = require "plugs.chord" ---@class Chord
+local lantern = require "plugs.lantern" ---@class Lantern
 
-return Config:add("config"):add "mappings"
+---@class Configuration
+local config = require("config")
+  :add(require "mappings.default")
+  :add(require("mappings.modes").config)
+  :init()
+
+lantern.rekindle(config)
+
+local ok, overrides = pcall(require, "overrides.mappings")
+if ok then
+  chord.apply_overrides(config, overrides)
+end
+
+chord.apply(config)
+
+return config

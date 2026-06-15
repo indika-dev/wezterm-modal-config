@@ -1,11 +1,9 @@
-local SunTimes = require "config.SunTimes"
-local Utils = require "utils"
-local color = Utils.fn.color
-
----@diagnostic disable-next-line: undefined-field
-local G = require("wezterm").GLOBAL
+local Opts = require("opts").config ---@class Opts.Config
+local color = require "utils.color" ---@class Color
 
 local Config = {}
+
+require("plugs.kanagawa").apply_to_config(Config, { scheme = "wave" })
 
 local colorscheme = function()
   if os.getenv "USER" == "stefan" then
@@ -24,16 +22,14 @@ local colorscheme = function()
   end
 end
 
-Config.color_schemes = color.get_schemes()
-Config.color_scheme = color.get_scheme()
-local theme = Config.color_schemes[colorscheme()]
+local theme = Config.color_schemes[Config.color_scheme]
 
 Config.background = {
   {
     source = { Color = theme.background },
     width = "100%",
     height = "100%",
-    opacity = G.opacity or 1,
+    opacity = Opts.color.opacity,
   },
 }
 
@@ -42,11 +38,7 @@ Config.bold_brightens_ansi_colors = "BrightAndBold"
 ---char select and command palette
 Config.char_select_bg_color = theme.brights[6]
 Config.char_select_fg_color = theme.background
-if os.getenv "USER" == "stefan" then
-  Config.char_select_font_size = 16
-else
-  Config.char_select_font_size = 14
-end
+Config.char_select_font_size = 12
 
 Config.command_palette_bg_color = theme.brights[6]
 Config.command_palette_fg_color = theme.background
@@ -74,7 +66,7 @@ Config.text_blink_rate = 500
 Config.text_blink_rate_rapid = 250
 
 ---visual bell
-Config.audible_bell = "Disabled"
+Config.audible_bell = "SystemBeep"
 Config.visual_bell = {
   fade_in_function = "EaseOut",
   fade_in_duration_ms = 200,
@@ -90,7 +82,7 @@ Config.integrated_title_buttons = { "Hide", "Maximize", "Close" }
 
 ---exit behavior
 Config.clean_exit_codes = { 130 }
-Config.exit_behavior = "Close"
+Config.exit_behavior = "CloseOnCleanExit"
 Config.exit_behavior_messaging = "Verbose"
 Config.skip_close_confirmation_for_processes_named = {
   "bash",
