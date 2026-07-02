@@ -6,8 +6,7 @@ local sigil = require "plugs.sigil" ---@class Sigil.Api
 local Config = {}
 
 if fs.is_win then
-  Config.default_prog =
-    { "pwsh", "-NoLogo", "-ExecutionPolicy", "RemoteSigned", "-NoProfileLoadTime" }
+  Config.default_prog = { "wsl", "--distribution", "FedoraLinux-44", "--cd", "~" }
 
   Config.launch_menu = {
     {
@@ -35,15 +34,21 @@ if fs.is_win then
     {
       name = "WSL:Ubuntu",
       distribution = "Ubuntu",
-      username = "sravioli",
+      username = "stefan",
       default_cwd = "~",
       default_prog = { "bash", "-i", "-l" },
     },
     {
-      name = "WSL:Alpine",
-      distribution = "Alpine",
-      username = "sravioli",
-      default_cwd = "/home/sravioli",
+      name = "WSL:AlmaLinux-10",
+      distribution = "AlmaLinux",
+      username = "stefan",
+      default_cwd = "/home/stefan",
+    },
+    {
+      name = "WSL:FedoraLinux-44",
+      distribution = "FedoraLinux",
+      username = "stefan",
+      default_cwd = "/home/stefan",
     },
   }
 end

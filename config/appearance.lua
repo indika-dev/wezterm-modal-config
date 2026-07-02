@@ -5,23 +5,6 @@ local Config = {}
 
 require("plugs.kanagawa").apply_to_config(Config, { scheme = "wave" })
 
-local colorscheme = function()
-  if os.getenv "USER" == "stefan" then
-    local _nowepochtime = os.time(os.date "!*t")
-    local epochTimesTable = SunTimes.GetSunTimes(51.09102, 6.5827)
-    if
-      _nowepochtime >= epochTimesTable.sunrise
-      and _nowepochtime < epochTimesTable.sunset
-    then
-      return "kanagawa-lotus"
-    else
-      return "kanagawa-dragon"
-    end
-  else
-    return "kanagawa-wave"
-  end
-end
-
 local theme = Config.color_schemes[Config.color_scheme]
 
 Config.background = {
@@ -66,7 +49,7 @@ Config.text_blink_rate = 500
 Config.text_blink_rate_rapid = 250
 
 ---visual bell
-Config.audible_bell = "SystemBeep"
+Config.audible_bell = "Disabled"
 Config.visual_bell = {
   fade_in_function = "EaseOut",
   fade_in_duration_ms = 200,
@@ -94,6 +77,8 @@ Config.skip_close_confirmation_for_processes_named = {
   "cmd.exe",
   "pwsh.exe",
   "powershell.exe",
+  "wsl.exe",
+  "wsl",
 }
 Config.window_close_confirmation = "AlwaysPrompt"
 

@@ -1,8 +1,5 @@
 ---@meta
 
-local Utils = require "utils"
-local fs = Utils.fn.fs
-
 function Protect(tbl)
   return setmetatable({}, {
     __index = tbl,
@@ -14,6 +11,8 @@ function Protect(tbl)
     end,
   })
 end
+
+local isWin = true
 
 ---@class SunTimes
 local M = {}
@@ -46,7 +45,7 @@ M.GetSunTimes = function(nLatitude, nLongitude)
 
   local tDate = os.date "!*t"
   local nTimestamp = os.time(tDate)
-  if fs.platform().is_win then
+  if isWin then
     -- convert Windows timestamp (0 = 1/1/1601) to Unix/Lua timestamp (0 = 1/1/1970)
     nTimestamp = nTimestamp - 11644473600
   end
